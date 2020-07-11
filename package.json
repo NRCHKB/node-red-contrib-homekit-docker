@@ -1,0 +1,27 @@
+{
+    "name": "node-red-docker",
+    "version": "1.1.1",
+    "description": "Low-code programming for event-driven applications",
+    "homepage": "http://nodered.org",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/NRCHKB/node-red-contrib-homekit-docker"
+    },
+    "main": "node_modules/node-red/red/red.js",
+    "scripts": {
+        "start": "node $NODE_OPTIONS node_modules/node-red/red.js $FLOWS"
+    },
+    "contributors": [
+        {
+            "name": "Raymond Mouthaan"
+        }
+    ],
+    "dependencies": {
+        "node-red": "1.1.1",
+        "node-red-contrib-homekit-bridged": "1.1.1"
+    },
+    "engines": {
+        "node": ">=10"
+    }
+}

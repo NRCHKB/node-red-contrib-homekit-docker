@@ -1,0 +1,6 @@
+#!/usr/bin/with-contenv sh
+
+cd /usr/src/node-red || exit
+
+echo "Starting node-red"
+s6-setuidgid node-red npm start -- --userDir /data
