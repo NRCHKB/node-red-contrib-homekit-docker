@@ -1,6 +1,6 @@
 # Node-RED-homekit-docker
 [![Greenkeeper badge](https://badges.greenkeeper.io/NRCHKB/node-red-contrib-homekit-docker.svg)](https://greenkeeper.io/)
-[![Build Status](https://travis-ci.org/NRCHKB/node-red-contrib-homekit-docker.svg?branch=master)](https://travis-ci.org/NRCHKB/nnode-red-contrib-homekit-docker)
+[![Build Status](https://travis-ci.org/NRCHKB/node-red-contrib-homekit-docker.svg?branch=master)](https://travis-ci.org/NRCHKB/node-red-contrib-homekit-docker)
 [![DockerHub Pull](https://img.shields.io/docker/pulls/nrchkb/node-red-homekit.svg)](https://hub.docker.com/r/nrchkb/node-red-homekit)
 [![DockerHub Star](https://img.shields.io/docker/stars/nrchkb/node-red-homekit.svg?maxAge=2592000)](https://hub.docker.com/r/nrchkb/node-red-homekit)
 
