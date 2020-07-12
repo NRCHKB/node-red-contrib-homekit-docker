@@ -16,7 +16,7 @@ Currently Node-RED-homekit has support for multiple architectures:
 
 **Note**: Currently there is a bug in Docker's architecture detection that fails for arm32v6 - eg Raspberry Pi Zero or 1. For these devices you currently need to specify the full image tag for arm32v6.
 
-### Quick Start
+### Quick Start (for those already running Docker)
 
 ```shell script
 docker run -d --net=host -v <path_on_host>:/data --name=node-red-homekit nrchkb/node-red-homekit
@@ -30,6 +30,20 @@ Let's dissect that command:
     -v <path_on_host>:/data     - Persist container data
     --name node-red-homekit     - Give this machine a friendly local name.
     nrchkb/node-red-homekit     - The image to base it.
+
+### Raspberry Pi (including install Docker)
+
+Following these commands will install Docker, add user `pi` to Docker group, then set the docker container to always run. Update commands will be available soon (work in progress July, 2020).
+
+```
+sudo apt update && upgrade
+cd ~
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+sudo usermod -aG docker pi
+sudo reboot
+docker run -d --net=host -v ~/:/data --restart always --name node-red-homekit nrchkb/node-red-homekit
+```
 
 ### Synology
 
