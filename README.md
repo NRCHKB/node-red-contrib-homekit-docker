@@ -6,7 +6,7 @@
 Node-RED-homekit-docker is a Node-RED based project with support for homekit. It is based on the [official Node-RED Docker](https://hub.docker.com/r/nodered/node-red) images with the necessary tools and npm module [node-red-contrib-homekit-bridged](https://www.npmjs.com/package/node-red-contrib-homekit-bridged) installed to run homekit within a docker container. 
 
 ## Architecture
-Node-red-homekit-docker is supported by manifest list, which means one doesn't need to specify the tag for a specific architecture. Using the image without any tag or the latest tag, will pull the right image for the architecture required.
+Node-RED-homekit-docker is supported by manifest list, which means one doesn't need to specify the tag for a specific architecture. Using the image without any tag or the latest tag, will pull the right image for the architecture required.
 
 Currently Node-RED-homekit has support for multiple architectures:
 - `amd64`   : based on linux Alpine - for most desktop computer (e.g. x64, x86-64, x86_64)
@@ -29,7 +29,7 @@ Let's dissect that command:
     --net=host                  - Connect to the host network, which is required to work with homekit.
     -v <path_on_host>:/data     - Persist container data
     --name node-red-homekit     - Give this machine a friendly local name.
-    nrchkb/node-red-homekit  - The image to base it.
+    nrchkb/node-red-homekit     - The image to base it.
 
 ### Synology
 
