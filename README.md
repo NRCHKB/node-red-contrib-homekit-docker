@@ -18,7 +18,7 @@ Currently Node-RED-homekit has support for multiple architectures:
 
 ### Quick Start (for those already running Docker)
 
-```shell script
+```bash
 docker run -d --net=host -v <path_on_host>:/data --name=node-red-homekit nrchkb/node-red-homekit
 ```
 
@@ -35,7 +35,7 @@ Let's dissect that command:
 
 Following these commands will install Docker, add user `pi` to Docker group, then set the docker container to always run. Update commands will be available soon (work in progress July, 2020).
 
-```
+```bash
 sudo apt update && upgrade
 cd ~
 curl -fsSL https://get.docker.com -o get-docker.sh
@@ -51,7 +51,7 @@ Synology users need to add the environment variable DSM_HOSTNAME.
 
 Click the Environment tab and add a new environment variable named DSM_HOSTNAME. The value of the DSM_HOSTNAME environment variable should exactly match the server name as shown under Synology DSM Control Panel -> Info Center -> Server name, it should contain no spaces or special characters.
 
-```shell script
+```bash
 docker run it --net=host -v <path_on_host>:/data -e DSM_HOSTNAME=<synology_hostname> --name=homekit nrchkb/node-red-homekit:<tag>
 ```
 
@@ -61,14 +61,26 @@ Since Node-RED 1.0 the container user is `node-red` and has uid `1000` and gid `
 
 Verify command:
 
-```shell script
+```bash
 ls -nal <path_on_host>
 ```
 
 Modify command:
 
-```shell script
+```bash
 chown -R  1000:1000 <path_on_host>
+```
+
+### Debug
+
+To debug NRCHKB you have to run node-red in docker in debug mode by adding `-e` argument:
+
+```-e "DEBUG=NRCHKB*,HAP-NodeJS*"```
+
+To do that modify starting script like below:
+
+```bash
+docker run it -e "DEBUG=NRCHKB*,HAP-NodeJS*" --net=host -v <path_on_host>:/data -e DSM_HOSTNAME=<synology_hostname> --name=homekit nrchkb/node-red-homekit:<tag>
 ```
 
 ### Node-RED Docker official
