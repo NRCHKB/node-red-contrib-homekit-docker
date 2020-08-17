@@ -36,7 +36,7 @@ Let's dissect that command:
 Following these commands will install Docker, add user `pi` to Docker group, then set the docker container to always run. Update commands will be available soon (work in progress July, 2020).
 
 ```bash
-sudo apt update && upgrade
+sudo apt update && sudo apt upgrade
 cd ~
 curl -fsSL https://get.docker.com -o get-docker.sh
 sudo sh get-docker.sh
