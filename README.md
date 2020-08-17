@@ -122,6 +122,8 @@ docker pull nrchkb/node-red-homekit
 docker run -d --net=host -v ~/node-red-homekit:/data --restart always --name node-red-homekit nrchkb/node-red-homekit
 ```
 
+This runs the container based on the latest `nrchkb/node-red-homekit` image and retains your flows!
+
 ### Synology
 
 Synology users need to add the environment variable DSM_HOSTNAME.
