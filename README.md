@@ -33,15 +33,93 @@ Let's dissect that command:
 
 ### Raspberry Pi (including install Docker)
 
-Following these commands will install Docker, add user `pi` to Docker group, then set the docker container to always run. Update commands will be available soon (work in progress July, 2020).
+Following these commands will install Docker, add user `pi` to Docker group, then set the docker container to always run.
+
+We assume you have some basic knowledge of Linux and you are logged in as `pi` user.  
+
+1) Make sure we are in the home directory of the pi user:
 
 ```bash
 cd ~
+```
+
+2) Make sure we have the latest packages available and upgrade to the latest versions:
+
+```bash
 sudo apt update && sudo apt upgrade -y
+```
+
+3) Download the docker install script and execute it to install Docker on your system.
+
+```bash
 curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh
+```
+
+4) As the Docker script explains, add the pi user to the Docker group so that the pi user has the permissions to execute docker commands:
+
+```bash
 sudo usermod -aG docker pi
+```
+
+5) Reboot the Raspberry PI or just log out and back in:
+
+```bash
 sudo reboot
-docker run -d --net=host -v ~/:/data --restart always --name node-red-homekit nrchkb/node-red-homekit
+```
+
+6) To test if your Docker install went well: 
+
+```bash
+docker run --rm hello-world
+```
+
+If the above steps went as expected, you are ready to run the `nrchkb/node-red-homekit` image as a container. But before that we create a directory on the pi host so that all node-red / node-red-homekit files are stored out side the container on your raspberry pi.
+
+7) Make directory in your pi user's home directory:
+
+```bash
+mkdir node-red-homekit
+```
+
+8) Run the Docker run command to deploy the `nrchkb/node-red-homekit` image as a container and where the container `/data` directory is binded to the `/home/pi/node-red-homekit` directory on your Raspberry PI.
+
+```bash
+docker run -d --net=host -v ~/node-red-homekit:/data --restart always --name node-red-homekit nrchkb/node-red-homekit
+```
+
+You dont need to expicit map ports, since all ports are opened on the hosts network! This is required for homekit to work well.
+
+### Upgrade to the latest image
+Suppose there is a new `nrchkb/node-red-homekit` image available? How do I make use of this new image?
+
+1) Find the id of your current deployed container:
+
+```bash
+docker container ls
+```
+The above command lists all running container and in the first column it displays the id of the container and in the last column it's name.
+
+2) Stop the current container:
+
+```
+docker stop <container_id or container_name>
+```
+
+3) Remove the current container:
+```
+docker rm  <container_id or container_name>
+```
+
+4) Pull the latest `nrchkb/node-red-homekit` image from [Docker Hub](https://hub.docker.com/r/nrchkb/node-red-homekit):
+
+```bash
+docker pull nrchkb/node-red-homekit
+```
+
+5) Deploy the container again:
+
+```bash
+docker run -d --net=host -v ~/node-red-homekit:/data --restart always --name node-red-homekit nrchkb/node-red-homekit
 ```
 
 ### Synology
