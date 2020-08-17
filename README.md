@@ -36,10 +36,9 @@ Let's dissect that command:
 Following these commands will install Docker, add user `pi` to Docker group, then set the docker container to always run. Update commands will be available soon (work in progress July, 2020).
 
 ```bash
-sudo apt update && sudo apt upgrade
+sudo apt update && sudo apt upgrade -y
 cd ~
-curl -fsSL https://get.docker.com -o get-docker.sh
-sudo sh get-docker.sh
+curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh
 sudo usermod -aG docker pi
 sudo reboot
 docker run -d --net=host -v ~/:/data --restart always --name node-red-homekit nrchkb/node-red-homekit
