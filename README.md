@@ -155,6 +155,72 @@ docker run -d --net=host -v ~/node-red-homekit:/data --restart always --name nod
 
 This runs the container based on the latest `nrchkb/node-red-homekit` image and retains your flows!
 
+### Docker Compose (including install Docker Compose)
+For demo purpose we us a Raspberry Pi with Docker installed (see )
+
+1) Install required packages for Docker Compose
+
+```bash
+sudo apt update && sudo apt install -y libffi-dev libssl-dev python3 python3-pip
+```
+
+2) Install Docker Compose using pip3
+
+```
+sudo pip3 -v install docker-compose
+```
+
+3) Create a Docker compose yml for `nrchkb/node-red-homekit`:
+
+Let's assume you have a directory `/home/pi/node-red-homekit` with a `data` sub-directory:
+
+```bash
+node-red-homekit/
+`-- data
+
+1 directory, 0 files
+```
+
+Use your favorite editor like nano to create a file named `docker-compose.yml` with the content below and save it in `/home/pi/node-red-homekit`.
+
+```yaml
+version: '2'
+services:
+  node-red-homekit:
+    image: nrchkb/node-red-homekit
+    restart: always
+    network_mode: host
+    volumes:
+      - /home/pi/node-red-homekit/data:/data
+```
+
+note 1: `/home/pi/node-red-homekit/data` is the persistence directory where the Docker container stores its files.
+note 2: there is no port mapping defined, since the container is attached / uses the host network. 
+
+4) Deploy the service as define in `docker-compose.yml`
+
+From the `/home/pi/node-red-homekit` directory executed the command below to deploy the service and therefore the container:
+
+```bash
+docker-compose up -d
+```
+
+5) Verify your deployed container:
+
+```bash
+docker container ls
+```
+
+6) To update to the latest image:
+
+The command below stops the current running container, removes it and removes the image.
+
+```bash
+docker-compose down --rmi  all
+```
+
+Run the command in step 4 to redeploy the service. It pulls the (latest) image, sinces now is available locally. 
+
 ### Synology
 
 Synology users need to add the environment variable DSM_HOSTNAME.
