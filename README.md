@@ -43,7 +43,7 @@ We assume you have some basic knowledge of Linux and you are logged in as `pi` u
 cd ~
 ```
 
-2) Make sure we have the latest packages available and upgrade to the latest versions:
+2) Make sure we have the latest packages available and upgrade to the latest versions (reboot if needed!):
 
 ```bash
 sudo apt update && sudo apt upgrade -y
