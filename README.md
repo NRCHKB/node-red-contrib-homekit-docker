@@ -28,6 +28,7 @@ Let's dissect that command:
     -d                          - Run container in background and print container ID.
     --net=host                  - Connect to the host network, which is required to work with homekit.
     -v <path_on_host>:/data     - Persist container data
+    -e TZ=Europe/Amsterdam      - Set timezone, see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
     --name node-red-homekit     - Give this machine a friendly local name.
     nrchkb/node-red-homekit     - The image to base it.
 
@@ -115,7 +116,7 @@ mkdir node-red-homekit
 8) Run the Docker run command to deploy the `nrchkb/node-red-homekit` image as a container and where the container `/data` directory is binded to the `/home/pi/node-red-homekit` directory on your Raspberry PI.
 
 ```bash
-docker run -d --net=host -v ~/node-red-homekit:/data --restart always --name node-red-homekit nrchkb/node-red-homekit
+docker run -d --net=host -v ~/node-red-homekit:/data --restart always -e TZ=Europe/Amsterdam --name node-red-homekit nrchkb/node-red-homekit
 ```
 
 You dont need to expicit map ports, since all ports are opened on the hosts network! This is required for homekit to work well.
@@ -150,7 +151,7 @@ docker pull nrchkb/node-red-homekit
 5) Deploy the container again:
 
 ```bash
-docker run -d --net=host -v ~/node-red-homekit:/data --restart always --name node-red-homekit nrchkb/node-red-homekit
+docker run -d --net=host -v ~/node-red-homekit:/data --restart always -e TZ=Europe/Amsterdam --name node-red-homekit nrchkb/node-red-homekit
 ```
 
 This runs the container based on the latest `nrchkb/node-red-homekit` image and retains your flows!
@@ -190,6 +191,8 @@ services:
     image: nrchkb/node-red-homekit
     restart: always
     network_mode: host
+    environment:
+      - TZ=Europe/Amsterdam
     volumes:
       - /home/pi/node-red-homekit/data:/data
 ```
@@ -228,7 +231,7 @@ Synology users need to add the environment variable DSM_HOSTNAME.
 Click the Environment tab and add a new environment variable named DSM_HOSTNAME. The value of the DSM_HOSTNAME environment variable should exactly match the server name as shown under Synology DSM Control Panel -> Info Center -> Server name, it should contain no spaces or special characters.
 
 ```bash
-docker run it --net=host -v <path_on_host>:/data -e DSM_HOSTNAME=<synology_hostname> --name=homekit nrchkb/node-red-homekit:<tag>
+docker run it --net=host -v <path_on_host>:/data -e DSM_HOSTNAME=<synology_hostname> -e TZ=Europe/Amsterdam --name=homekit nrchkb/node-red-homekit:<tag>
 ```
 
 ### Permissions
@@ -256,7 +259,7 @@ To debug NRCHKB you have to run node-red in docker in debug mode by adding `-e` 
 To do that modify starting script like below:
 
 ```bash
-docker run it -e "DEBUG=NRCHKB*,HAP-NodeJS*" --net=host -v <path_on_host>:/data -e DSM_HOSTNAME=<synology_hostname> --name=homekit nrchkb/node-red-homekit:<tag>
+docker run it -e "DEBUG=NRCHKB*,HAP-NodeJS*" --net=host -v <path_on_host>:/data -e DSM_HOSTNAME=<synology_hostname> -e TZ=Europe/Amsterdam --name=homekit nrchkb/node-red-homekit:<tag>
 ```
 
 ### Node-RED Docker official
