@@ -19,7 +19,7 @@ Currently Node-RED-homekit has support for multiple architectures:
 ### Quick Start (for those already running Docker)
 
 ```bash
-docker run -d --net=host -v <path_on_host>:/data --name=node-red-homekit nrchkb/node-red-homekit
+docker run -d --net=host -v <path_on_host>:/data -e TZ=Europe/Amsterdam --name=node-red-homekit nrchkb/node-red-homekit
 ```
 
 Let's dissect that command:
