@@ -8,7 +8,7 @@ Node-RED-homekit-docker is a Node-RED based project with support for homekit. It
 ## Architecture
 Node-RED-homekit-docker is supported by manifest list, which means one doesn't need to specify the tag for a specific architecture. Using the image without any tag or the latest tag, will pull the right image for the architecture required.
 
-Currently Node-RED-homekit has support for multiple architectures:
+Currently, Node-RED-homekit has support for multiple architectures:
 - `amd64`   : based on linux Alpine - for most desktop computer (e.g. x64, x86-64, x86_64)
 - `arm32v6` : based on linux Alpine - (i.e. Raspberry Pi 1 & Zero)
 - `arm32v7` : based on linux Alpine - (i.e. Raspberry Pi 2, 3, 4)
@@ -119,7 +119,7 @@ mkdir node-red-homekit
 docker run -d --net=host -v ~/node-red-homekit:/data --restart always -e TZ=Europe/Amsterdam --name node-red-homekit nrchkb/node-red-homekit
 ```
 
-You dont need to expicit map ports, since all ports are opened on the hosts network! This is required for homekit to work well.
+You don't need to explicit map ports, since all ports are opened on the hosts network! This is required for homekit to work well.
 
 ### Upgrade to the latest image
 Suppose there is a new `nrchkb/node-red-homekit` image available? How do I make use of this new image?
@@ -222,7 +222,7 @@ The command below stops the current running container, removes it and removes th
 docker-compose down --rmi  all
 ```
 
-Run the command in step 4 to redeploy the service. It pulls the (latest) image, sinces now is available locally. 
+Run the command in step 4 to redeploy the service. It pulls the (latest) image, since now is available locally. 
 
 ### Synology
 
@@ -252,7 +252,7 @@ chown -R  1000:1000 <path_on_host>
 
 ### Debug
 
-To debug NRCHKB you have to run node-red in docker in debug mode by adding `-e` argument:
+To debug NRCHKB you have to add environment variable to command running node-red in docker by adding `-e` argument:
 
 ```-e "DEBUG=NRCHKB*,HAP-NodeJS*"```
 
