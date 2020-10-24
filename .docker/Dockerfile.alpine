@@ -52,10 +52,12 @@ RUN npm install --unsafe-perm --no-update-notifier --only=production
 # Add passport openidconnect strategy to allow usage of OIDC for authentication at Node RED editor & dashboard
 RUN npm install passport-openidconnect \
     && npm install jwt-decode
-    
-# Modify jaredhanson/passport-openidconnect to retrieve profile scope 
+
+# Modify jaredhanson/passport-openidconnect to retrieve profile scope
 # Apply modified file /usr/src/node-red/node_modules/passport-openidconnect/lib/strategy.js
 # Modified file adds profile in line 244 to get userinfo
 COPY strategy.js /usr/src/node-red/node_modules/passport-openidconnect/lib/strategy.js
+
+RUN setcap 'cap_net_bind_service=+ep' `which node`
 
 ENTRYPOINT [ "/init" ]
