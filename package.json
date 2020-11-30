@@ -1,6 +1,6 @@
 {
     "name": "node-red-contrib-homekit-docker",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "description": "Node-RED nodes to simulate Apple HomeKit devices.",
     "homepage": "http://nodered.org",
     "license": "Apache-2.0",
@@ -21,7 +21,7 @@
         }
     ],
     "dependencies": {
-        "node-red": "1.2.5",
+        "node-red": "1.2.6",
         "node-red-contrib-homekit-bridged": "1.2.0"
     },
     "engines": {
