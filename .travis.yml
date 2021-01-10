@@ -8,7 +8,7 @@ language: shell
 
 env:
     global:
-        - NODE_RED_BASE_TAG=1.2.6
+        - NODE_RED_BASE_TAG=1.2.7
         - QEMU_VERSION=v4.0.0
         - S6_VERSION=v1.22.1.0
         - DOCKER_FILE=Dockerfile.alpine
