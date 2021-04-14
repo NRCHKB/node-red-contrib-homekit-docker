@@ -264,3 +264,6 @@ docker run it -e "DEBUG=NRCHKB*,HAP-NodeJS*" --net=host -v <path_on_host>:/data 
 
 ### Node-RED Docker official
 For more detailed info refer to the [Node-RED Docker official](https://github.com/node-red/node-red-docker) pages.
+
+### NRCHKB Support
+For more info visit our [Website](https://nrchkb.github.io) or [Discord](https://discord.gg/uvYac5u).
