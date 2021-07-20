@@ -118,7 +118,7 @@ jobs:
         continue-on-error: true
         with:
           context: .
-          platforms: linux/amd64, linux/arm64, linux/arm/v7, linux/arm/v6
+          platforms: linux/amd64, linux/arm64, linux/arm/v7
           push: ${{ steps.imageVersion.outputs.push }}
           file: .docker/Dockerfile.alpine 
           build-args: |
@@ -126,7 +126,7 @@ jobs:
             BUILD_DATE=${{ steps.date.outputs.date }}
             BUILD_VERSION=${{ steps.imageVersion.outputs.version }}
             BUILD_REF=${{ env.GITHUB_SHA }}
-            NODE_RED_VERSION=v${{ steps.nodeRedVersion.outputs.version }}
-            HOMEKIT_BRIDGED_VERSION=v${{ steps.nrchkbVersion.outputs.version }}
+            NODE_RED_VERSION=${{ steps.nodeRedVersion.outputs.version }}
+            HOMEKIT_BRIDGED_VERSION=${{ steps.nrchkbVersion.outputs.version }}
             TAG_SUFFIX=${{ matrix.suffix }}
           tags: ${{ steps.imageVersion.outputs.tags }}
