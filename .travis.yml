@@ -1,6 +1,6 @@
 os: linux
 
-dist: xenial
+dist: focal
 
 services: docker
 
@@ -39,6 +39,11 @@ env:
         - NODE_VERSION=12   TAG_SUFFIX=minimal   QEMU_ARCH=aarch64   ARCH=arm64v8    S6_ARCH=aarch64     FFMPEG_ARCH=aarch64   NODE_RED_VERSION=2.0.1
 
 before_install:
+    - sudo rm -rf /var/lib/apt/lists/*
+    - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) edge"
+    - sudo apt-get update
+    - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
     - ./.docker/docker.sh prepare
 
 before_script:
