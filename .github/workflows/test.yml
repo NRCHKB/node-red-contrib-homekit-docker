@@ -83,7 +83,7 @@ jobs:
             PUSH="true"
             VERSION=${TRAVIS_TAG:1}
             if [ "${{ matrix.node }}" == "${{ env.LATEST_NODE }}" ] && [ "${{ matrix.suffix}}" == "" ]; then
-              TAGS="$TAGS,$IMAGE:$VERSION,$IMAGE:latest"
+              TAGS="$TAGS,$IMAGE:$VERSION,$IMAGE:latest,$IMAGE:latest-${{ matrix.node }}"
             fi
           else
             IMAGE=${{ env.DEV_IMAGE }}
