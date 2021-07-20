@@ -15,8 +15,8 @@ jobs:
     env:
       # Setting the defaults up front
       LATEST_NODE: 10
-      DEFAULT_IMAGE: nodered/node-red
-      DEV_IMAGE: nodered/node-red-dev
+      DEFAULT_IMAGE: nrchkb/node-red-homekit
+      DEV_IMAGE: nrchkb/node-red-homekit-dev
     runs-on: ubuntu-latest
 
     strategy:
