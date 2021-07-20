@@ -37,9 +37,9 @@ ARG TARGETPLATFORM
 
 # s6 overlay
 RUN case "$TARGETPLATFORM" in \
-    linux\/amd64) FFMPEG_ARCH='amd64';; \
-    linux\/arm/v7) FFMPEG_ARCH='armhf';; \
-    linux\/arm64) FFMPEG_ARCH='aarch64';; \
+    linux\/amd64) S6_ARCH='amd64';; \
+    linux\/arm/v7) S6_ARCH='armhf';; \
+    linux\/arm64) S6_ARCH='aarch64';; \
     *) echo "unsupported architecture"; echo "target platform is $TARGETPLATFORM"; echo "arch is $ARCH"; exit 1 ;; \
     esac \
     && set -x \
