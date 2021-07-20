@@ -59,7 +59,9 @@ function docker_build() {
 
   if [[ ${TAG_SUFFIX} == "default" ]]; then export TAG_SUFFIX=""; else export TAG_SUFFIX="-${TAG_SUFFIX}"; fi
 
-  docker build --no-cache \
+  docker buildx build \
+    --platform linux/${ARCH} \
+    --no-cache \
     --build-arg ARCH=${ARCH} \
     --build-arg NODE_VERSION=${NODE_VERSION} \
     --build-arg BUILD_DATE=$(date +"%Y-%m-%dT%H:%M:%SZ") \
