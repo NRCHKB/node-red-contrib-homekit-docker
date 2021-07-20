@@ -3,6 +3,10 @@
 set -o errexit
 
 main() {
+  # arg 1 holds switch string
+  # arg 2 holds node version
+  # arg 3 holds tag suffix
+
   case $1 in
   "prepare")
     docker_prepare
@@ -59,9 +63,7 @@ function docker_build() {
 
   if [[ ${TAG_SUFFIX} == "default" ]]; then export TAG_SUFFIX=""; else export TAG_SUFFIX="-${TAG_SUFFIX}"; fi
 
-  docker buildx build \
-    --platform linux/${ARCH} \
-    --no-cache \
+  docker build --no-cache \
     --build-arg ARCH=${ARCH} \
     --build-arg NODE_VERSION=${NODE_VERSION} \
     --build-arg BUILD_DATE=$(date +"%Y-%m-%dT%H:%M:%SZ") \
