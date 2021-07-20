@@ -1,9 +1,9 @@
 ARG ARCH
 ARG NODE_VERSION
 ARG TAG_SUFFIX
-ARG NODE_RED_BASE_TAG
+ARG NODE_RED_VERSION
 
-FROM nodered/node-red:${NODE_RED_BASE_TAG}-${NODE_VERSION}${TAG_SUFFIX}-${ARCH}
+FROM nodered/node-red:${NODE_RED_VERSION}-${NODE_VERSION}${TAG_SUFFIX}-${ARCH}
 
 ARG QEMU_ARCH
 ARG S6_ARCH
@@ -22,7 +22,7 @@ LABEL org.label-schema.build-date=${BUILD_DATE} \
     org.label-schema.vcs-type="Git" \
     org.label-schema.vcs-url="https://github.com/NRCHKB/node-red-contrib-homekit-docker.git" \
     org.label-schema.arch=${ARCH} \
-    authors="Raymond Mouthaan"
+    authors="Raymond Mouthaan, Tadeusz Wyrzykowski"
 
 USER root
 
