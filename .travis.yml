@@ -1,6 +1,6 @@
 os: linux
 
-dist: xenial
+dist: focal
 
 services: docker
 
@@ -8,38 +8,42 @@ language: shell
 
 env:
     global:
-        - NODE_RED_BASE_TAG=1.3.5
         - QEMU_VERSION=v4.0.0
         - S6_VERSION=v1.22.1.0
         - DOCKER_FILE=Dockerfile.alpine
 
     jobs:
-        ### Node JS 10 #####################################################################################################
+        ### Node JS 10 #########################################################################################################
         # Default Images
-        - NODE_VERSION=10   TAG_SUFFIX=default  QEMU_ARCH=x86_64    ARCH=amd64      S6_ARCH=amd64       FFMPEG_ARCH=x86_64
-        - NODE_VERSION=10   TAG_SUFFIX=default  QEMU_ARCH=arm       ARCH=arm32v6    S6_ARCH=armhf       FFMPEG_ARCH=armv6l
-        - NODE_VERSION=10   TAG_SUFFIX=default  QEMU_ARCH=arm       ARCH=arm32v7    S6_ARCH=armhf       FFMPEG_ARCH=armv6l
-        - NODE_VERSION=10   TAG_SUFFIX=default  QEMU_ARCH=aarch64   ARCH=arm64v8    S6_ARCH=aarch64     FFMPEG_ARCH=aarch64
+        - NODE_VERSION=10   TAG_SUFFIX=default   QEMU_ARCH=x86_64    ARCH=amd64      S6_ARCH=amd64       FFMPEG_ARCH=x86_64    NODE_RED_VERSION=1.3.5
+        - NODE_VERSION=10   TAG_SUFFIX=default   QEMU_ARCH=arm       ARCH=arm32v6    S6_ARCH=armhf       FFMPEG_ARCH=armv6l    NODE_RED_VERSION=1.3.5
+        - NODE_VERSION=10   TAG_SUFFIX=default   QEMU_ARCH=arm       ARCH=arm32v7    S6_ARCH=armhf       FFMPEG_ARCH=armv6l    NODE_RED_VERSION=1.3.5
+        - NODE_VERSION=10   TAG_SUFFIX=default   QEMU_ARCH=aarch64   ARCH=arm64v8    S6_ARCH=aarch64     FFMPEG_ARCH=aarch64   NODE_RED_VERSION=1.3.5
         # Minimal Images
-        - NODE_VERSION=10   TAG_SUFFIX=minimal  QEMU_ARCH=x86_64    ARCH=amd64      S6_ARCH=amd64       FFMPEG_ARCH=x86_64
-        - NODE_VERSION=10   TAG_SUFFIX=minimal  QEMU_ARCH=arm       ARCH=arm32v6    S6_ARCH=armhf       FFMPEG_ARCH=armv6l
-        - NODE_VERSION=10   TAG_SUFFIX=minimal  QEMU_ARCH=arm       ARCH=arm32v7    S6_ARCH=armhf       FFMPEG_ARCH=armv6l
-        - NODE_VERSION=10   TAG_SUFFIX=minimal  QEMU_ARCH=aarch64   ARCH=arm64v8    S6_ARCH=aarch64     FFMPEG_ARCH=aarch64
+        - NODE_VERSION=10   TAG_SUFFIX=minimal   QEMU_ARCH=x86_64    ARCH=amd64      S6_ARCH=amd64       FFMPEG_ARCH=x86_64    NODE_RED_VERSION=1.3.5
+        - NODE_VERSION=10   TAG_SUFFIX=minimal   QEMU_ARCH=arm       ARCH=arm32v6    S6_ARCH=armhf       FFMPEG_ARCH=armv6l    NODE_RED_VERSION=1.3.5
+        - NODE_VERSION=10   TAG_SUFFIX=minimal   QEMU_ARCH=arm       ARCH=arm32v7    S6_ARCH=armhf       FFMPEG_ARCH=armv6l    NODE_RED_VERSION=1.3.5
+        - NODE_VERSION=10   TAG_SUFFIX=minimal   QEMU_ARCH=aarch64   ARCH=arm64v8    S6_ARCH=aarch64     FFMPEG_ARCH=aarch64   NODE_RED_VERSION=1.3.5
 
-        ### Node JS 12 #####################################################################################################
+        ### Node JS 12 #########################################################################################################
         # Default Images
-        - NODE_VERSION=12   TAG_SUFFIX=default  QEMU_ARCH=x86_64    ARCH=amd64      S6_ARCH=amd64       FFMPEG_ARCH=x86_64
-        - NODE_VERSION=12   TAG_SUFFIX=default  QEMU_ARCH=arm       ARCH=arm32v6    S6_ARCH=armhf       FFMPEG_ARCH=armv6l
-        - NODE_VERSION=12   TAG_SUFFIX=default  QEMU_ARCH=arm       ARCH=arm32v7    S6_ARCH=armhf       FFMPEG_ARCH=armv6l
-        - NODE_VERSION=12   TAG_SUFFIX=default  QEMU_ARCH=aarch64   ARCH=arm64v8    S6_ARCH=aarch64     FFMPEG_ARCH=aarch64
+        - NODE_VERSION=12   TAG_SUFFIX=default   QEMU_ARCH=x86_64    ARCH=amd64      S6_ARCH=amd64       FFMPEG_ARCH=x86_64    NODE_RED_VERSION=2.0.1
+        - NODE_VERSION=12   TAG_SUFFIX=default   QEMU_ARCH=arm       ARCH=arm32v6    S6_ARCH=armhf       FFMPEG_ARCH=armv6l    NODE_RED_VERSION=2.0.1
+        - NODE_VERSION=12   TAG_SUFFIX=default   QEMU_ARCH=arm       ARCH=arm32v7    S6_ARCH=armhf       FFMPEG_ARCH=armv6l    NODE_RED_VERSION=2.0.1
+        - NODE_VERSION=12   TAG_SUFFIX=default   QEMU_ARCH=aarch64   ARCH=arm64v8    S6_ARCH=aarch64     FFMPEG_ARCH=aarch64   NODE_RED_VERSION=2.0.1
 
         # Minimal Images
-        - NODE_VERSION=12   TAG_SUFFIX=minimal  QEMU_ARCH=x86_64    ARCH=amd64      S6_ARCH=amd64       FFMPEG_ARCH=x86_64
-        - NODE_VERSION=12   TAG_SUFFIX=minimal  QEMU_ARCH=arm       ARCH=arm32v6    S6_ARCH=armhf       FFMPEG_ARCH=armv6l
-        - NODE_VERSION=12   TAG_SUFFIX=minimal  QEMU_ARCH=arm       ARCH=arm32v7    S6_ARCH=armhf       FFMPEG_ARCH=armv6l
-        - NODE_VERSION=12   TAG_SUFFIX=minimal  QEMU_ARCH=aarch64   ARCH=arm64v8    S6_ARCH=aarch64     FFMPEG_ARCH=aarch64
+        - NODE_VERSION=12   TAG_SUFFIX=minimal   QEMU_ARCH=x86_64    ARCH=amd64      S6_ARCH=amd64       FFMPEG_ARCH=x86_64    NODE_RED_VERSION=2.0.1
+        - NODE_VERSION=12   TAG_SUFFIX=minimal   QEMU_ARCH=arm       ARCH=arm32v6    S6_ARCH=armhf       FFMPEG_ARCH=armv6l    NODE_RED_VERSION=2.0.1
+        - NODE_VERSION=12   TAG_SUFFIX=minimal   QEMU_ARCH=arm       ARCH=arm32v7    S6_ARCH=armhf       FFMPEG_ARCH=armv6l    NODE_RED_VERSION=2.0.1
+        - NODE_VERSION=12   TAG_SUFFIX=minimal   QEMU_ARCH=aarch64   ARCH=arm64v8    S6_ARCH=aarch64     FFMPEG_ARCH=aarch64   NODE_RED_VERSION=2.0.1
 
 before_install:
+    - sudo rm -rf /var/lib/apt/lists/*
+    - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) edge"
+    - sudo apt-get update
+    - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
     - ./.docker/docker.sh prepare
 
 before_script:
@@ -53,9 +57,9 @@ before_script:
           export TARGET=nrchkb/node-red-homekit
         fi
 
-    # Set NODE_RED_VERSION from package.json
+    # Set NODE_RED_VERSION in package.json
     - >
-        export NODE_RED_VERSION=$(grep -oE "\"node-red\": \"(\w*.\w*.\w*.\w*.\w*.)" package.json | cut -d\" -f4)
+        sed -ie "s/\"node-red\":[^\"].*\"/\"node-red\": \"${NODE_RED_VERSION}\"/g" package.json
 
     # Set HOMEKIT_BRIDGED_VERSION from package.json
     - >

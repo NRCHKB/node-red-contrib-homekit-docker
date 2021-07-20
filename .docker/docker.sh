@@ -3,6 +3,10 @@
 set -o errexit
 
 main() {
+  # arg 1 holds switch string
+  # arg 2 holds node version
+  # arg 3 holds tag suffix
+
   case $1 in
   "prepare")
     docker_prepare
@@ -49,7 +53,6 @@ function docker_build() {
   echo "DOCKER BUILD: node version -> ${NODE_VERSION}."
   echo "DOCKER BUILD: build version -> ${BUILD_VERSION}."
   echo "DOCKER BUILD: node-red version -> ${NODE_RED_VERSION}."
-  echo "DOCKER BUILD: node-red base tag -> ${NODE_RED_BASE_TAG}."
   echo "DOCKER BUILD: node-red-homekit-bridged version -> ${HOMEKIT_BRIDGED_VERSION}."
   echo "DOCKER BUILD: qemu arch - ${QEMU_ARCH}."
   echo "DOCKER BUILD: s6 arch - ${S6_ARCH}."
@@ -66,7 +69,7 @@ function docker_build() {
     --build-arg BUILD_DATE=$(date +"%Y-%m-%dT%H:%M:%SZ") \
     --build-arg BUILD_VERSION=${BUILD_VERSION} \
     --build-arg BUILD_REF=${TRAVIS_COMMIT} \
-    --build-arg NODE_RED_BASE_TAG=${NODE_RED_BASE_TAG} \
+    --build-arg NODE_RED_VERSION=${NODE_RED_VERSION} \
     --build-arg HOMEKIT_BRIDGED_VERSION=${HOMEKIT_BRIDGED_VERSION} \
     --build-arg QEMU_ARCH=${QEMU_ARCH} \
     --build-arg S6_ARCH=${S6_ARCH} \
