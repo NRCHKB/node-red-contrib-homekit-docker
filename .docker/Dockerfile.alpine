@@ -34,6 +34,17 @@ RUN set -ex \
     && npm set package-lock=false
 
 ARG TARGETPLATFORM
+
+# s6 overlay
+RUN case "$TARGETPLATFORM" in \
+    linux\/amd64) FFMPEG_ARCH='amd64';; \
+    linux\/arm/v7) FFMPEG_ARCH='armhf';; \
+    linux\/arm64) FFMPEG_ARCH='aarch64';; \
+    *) echo "unsupported architecture"; echo "target platform is $TARGETPLATFORM"; echo "arch is $ARCH"; exit 1 ;; \
+    esac \
+    && set -x \
+    && curl -Lfs https://github.com/just-containers/s6-overlay/releases/download/2.2.0.3/s6-overlay-${S6_ARCH}.tar.gz | tar xzf - -C / --no-same-owner
+
 # ffmpeg-for-homebridge
 RUN case "$TARGETPLATFORM" in \
     linux\/amd64) FFMPEG_ARCH='x86_64';; \
