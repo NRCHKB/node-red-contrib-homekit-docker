@@ -6,8 +6,6 @@ ARG NODE_RED_VERSION
 FROM nodered/node-red:${NODE_RED_VERSION}-${NODE_VERSION}${TAG_SUFFIX}
 
 ARG QEMU_ARCH
-ARG S6_ARCH
-ARG S6_VERSION
 ARG FFMPEG_ARCH
 ARG HOMEKIT_BRIDGED_VERSION
 
@@ -39,9 +37,6 @@ RUN set -ex \
       avahi-dev \
       dbus \
     && npm set package-lock=false
-
-# s6 overlay
-RUN curl -L -s https://github.com/just-containers/s6-overlay/releases/download/${S6_VERSION}/s6-overlay-${S6_ARCH}.tar.gz | tar xvzf - -C /
 
 # ffmpeg-for-homebridge
 RUN curl -Lf# https://github.com/homebridge/ffmpeg-for-homebridge/releases/latest/download/ffmpeg-alpine-${FFMPEG_ARCH}.tar.gz | tar xzf - -C / --no-same-owner
