@@ -6,7 +6,6 @@ ARG NODE_RED_VERSION
 FROM nodered/node-red:${NODE_RED_VERSION}-${NODE_VERSION}${TAG_SUFFIX}
 
 ARG QEMU_ARCH
-ARG FFMPEG_ARCH
 ARG HOMEKIT_BRIDGED_VERSION
 
 LABEL org.label-schema.build-date=${BUILD_DATE} \
@@ -39,7 +38,14 @@ RUN set -ex \
     && npm set package-lock=false
 
 # ffmpeg-for-homebridge
-RUN curl -Lf# https://github.com/homebridge/ffmpeg-for-homebridge/releases/latest/download/ffmpeg-alpine-${FFMPEG_ARCH}.tar.gz | tar xzf - -C / --no-same-owner
+RUN case "$(uname -m)" in \
+    x86_64) FFMPEG_ARCH='x86_64';; \
+    armv7l) FFMPEG_ARCH='armv7l';; \
+    aarch64) FFMPEG_ARCH='aarch64';; \
+    *) echo "unsupported architecture"; exit 1 ;; \
+    esac \
+    && set -x \
+    && curl -Lfs https://github.com/oznu/ffmpeg-for-homebridge/releases/latest/download/ffmpeg-alpine-${FFMPEG_ARCH}.tar.gz | tar xzf - -C / --no-same-owner
 
 COPY package.json .
 RUN npm install --unsafe-perm --no-update-notifier --only=production
