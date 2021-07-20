@@ -33,12 +33,13 @@ RUN set -ex \
       dbus \
     && npm set package-lock=false
 
+ARG TARGETPLATFORM
 # ffmpeg-for-homebridge
-RUN case "$(uname -m)" in \
-    x86_64) FFMPEG_ARCH='x86_64';; \
-    armv7l) FFMPEG_ARCH='armv7l';; \
-    aarch64) FFMPEG_ARCH='aarch64';; \
-    *) echo "unsupported architecture"; exit 1 ;; \
+RUN case "$TARGETPLATFORM" in \
+    linux\/amd64) FFMPEG_ARCH='x86_64';; \
+    linux\/arm/v7) FFMPEG_ARCH='armv6l';; \
+    linux\/arm64) FFMPEG_ARCH='aarch64';; \
+    *) echo "unsupported architecture"; echo "target platform is $TARGETPLATFORM"; echo "arch is $ARCH"; exit 1 ;; \
     esac \
     && set -x \
     && curl -Lfs https://github.com/oznu/ffmpeg-for-homebridge/releases/latest/download/ffmpeg-alpine-${FFMPEG_ARCH}.tar.gz | tar xzf - -C / --no-same-owner
