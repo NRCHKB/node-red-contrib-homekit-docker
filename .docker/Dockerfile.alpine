@@ -5,7 +5,6 @@ ARG NODE_RED_VERSION
 
 FROM nodered/node-red:${NODE_RED_VERSION}-${NODE_VERSION}${TAG_SUFFIX}
 
-ARG QEMU_ARCH
 ARG HOMEKIT_BRIDGED_VERSION
 
 LABEL org.label-schema.build-date=${BUILD_DATE} \
@@ -22,9 +21,6 @@ LABEL org.label-schema.build-date=${BUILD_DATE} \
     authors="Raymond Mouthaan, Tadeusz Wyrzykowski"
 
 USER root
-
-# QEMU - Quick Emulation
-COPY tmp/qemu-$QEMU_ARCH-static /usr/bin/qemu-$QEMU_ARCH-static
 
 # root filesystem
 COPY rootfs /
