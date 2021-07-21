@@ -20,9 +20,8 @@ jobs:
 
     strategy:
       matrix:
-        node: [10, 12, 14]
-        suffix: ["", "-minimal", "-raspbian"]
-        
+        node: [ 10, 12, 14 ]
+        suffix: [ "", "-minimal", "-raspbian" ]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -106,7 +105,7 @@ jobs:
               TAGS="$TAGS,$IMAGE:$VERSION"
             fi
           fi
-          
+
           PLATFORMS=""
           SUFFIX=""
           if [[ "${{matrix.suffix}}" == "-raspbian" ]]; then
@@ -135,7 +134,7 @@ jobs:
           context: .
           platforms: ${{ steps.imageSettings.outputs.platforms }}
           push: ${{ steps.imageSettings.outputs.push }}
-          file: .docker/Dockerfile.alpine 
+          file: .docker/Dockerfile.alpine
           build-args: |
             NODE_VERSION=${{ matrix.node }}
             BUILD_DATE=${{ steps.date.outputs.date }}
@@ -145,4 +144,4 @@ jobs:
             HOMEKIT_BRIDGED_VERSION=${{ steps.nrchkbVersion.outputs.version }}
             FFMPEG_OS=${{ steps.imageSettings.outputs.ffmpegOS }}
             TAG_SUFFIX=${{ steps.imageSettings.outputs.suffix }}
-          tags: ${{ steps.imageVersion.outputs.tags }}
+          tags: ${{ steps.imageSettings.outputs.tags }}
