@@ -31,10 +31,15 @@ RUN set -ex \
       avahi-compat-libdns_sd \
       avahi-dev \
       dbus \
-      raspberrypi \
     && npm set package-lock=false
 
 ARG TARGETPLATFORM
+ARG FFMPEG_OS
+
+# vcgencmd
+RUN case "$FFMPEG_OS" in \
+    raspbian) set -x && apk add --no-cache raspberrypi;; \
+    esac
 
 # s6 overlay
 RUN case "$TARGETPLATFORM" in \
@@ -48,7 +53,6 @@ RUN case "$TARGETPLATFORM" in \
     && curl -Lfs https://github.com/just-containers/s6-overlay/releases/download/v2.2.0.3/s6-overlay-${S6_ARCH}.tar.gz | tar xzf - -C / --no-same-owner
 
 # ffmpeg-for-homebridge
-ARG FFMPEG_OS
 RUN case "$TARGETPLATFORM" in \
     linux\/amd64) FFMPEG_ARCH='x86_64';; \
     linux\/arm/v7) FFMPEG_ARCH='armv6l';; \
