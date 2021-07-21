@@ -20,8 +20,8 @@ jobs:
 
     strategy:
       matrix:
-        node: [10, 12]
-        suffix: ["", "-minimal"]
+        node: [10, 12, 14]
+        suffix: ["", "-minimal", "-raspbian"]
         
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -65,8 +65,8 @@ jobs:
             NODE_RED_VERSION=$(grep -oE "\"node-red\": \"(\w*.\w*.\w*.\w*.\w*.)" package.json | cut -d\" -f4)
           fi
           echo "::set-output name=version::$NODE_RED_VERSION"
-      - name: Get Image Version
-        id: imageVersion
+      - name: Set Image Settings
+        id: imageSettings
         run: |
           TAGS=""
           while IFS= read -r TAG;do
@@ -99,26 +99,33 @@ jobs:
               TAGS="$TAGS,$IMAGE:$VERSION"
             fi
           fi
+          
+          PLATFORMS=""
+          if [[ "${{matrix.suffix}}" == "-raspbian" ]]; then
+            PLATFORMS="linux/arm/v7, linux/arm/v6"
+          else
+            PLATFORMS="linux/amd64, linux/arm64, linux/arm/v7, linux/arm/v6"
+          fi
 
           echo $TAGS
 
           echo "::set-output name=tags::$TAGS"
           echo "::set-output name=push::$PUSH"
           echo "::set-output name=version::$VERSION"
-      -
-        name: Build and push
+          echo "::set-output name=platforms::$PLATFORMS"
+      - name: Build and push
         id: build-push
         uses: docker/build-push-action@v2
         continue-on-error: true
         with:
           context: .
-          platforms: linux/amd64, linux/arm64, linux/arm/v7
-          push: ${{ steps.imageVersion.outputs.push }}
+          platforms: ${{ steps.imageSettings.outputs.platforms }}
+          push: ${{ steps.imageSettings.outputs.push }}
           file: .docker/Dockerfile.alpine 
           build-args: |
             NODE_VERSION=${{ matrix.node }}
             BUILD_DATE=${{ steps.date.outputs.date }}
-            BUILD_VERSION=${{ steps.imageVersion.outputs.version }}
+            BUILD_VERSION=${{ steps.imageSettings.outputs.version }}
             BUILD_REF=${{ env.GITHUB_SHA }}
             NODE_RED_VERSION=${{ steps.nodeRedVersion.outputs.version }}
             HOMEKIT_BRIDGED_VERSION=${{ steps.nrchkbVersion.outputs.version }}
