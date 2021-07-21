@@ -10,7 +10,7 @@ Node-RED-homekit-docker is supported by manifest list, which means one doesn't n
 
 Currently, Node-RED-homekit has support for multiple architectures:
 - `amd64`   : based on linux Alpine - for most desktop computer (e.g. x64, x86-64, x86_64)
-- ~~`arm32v6` : based on linux Alpine - (i.e. Raspberry Pi 1 & Zero)~~ - `arm32v6` is temporarily unsupported
+- `arm32v6` : based on linux Alpine - (i.e. Raspberry Pi 1 & Zero)
 - `arm32v7` : based on linux Alpine - (i.e. Raspberry Pi 2, 3, 4)
 - `arm64v8` : based on linux Alpine - (i.e. Pine64)
 
