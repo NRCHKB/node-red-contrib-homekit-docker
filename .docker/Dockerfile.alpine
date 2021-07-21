@@ -3,7 +3,13 @@ ARG NODE_VERSION
 ARG TAG_SUFFIX
 ARG NODE_RED_VERSION
 
-FROM nodered/node-red:${NODE_RED_VERSION}-${NODE_VERSION}${TAG_SUFFIX}
+ENV NODE_RED_TAG_SUFFIX="$TAG_SUFFIX"
+
+RUN case "NODE_RED_TAG_SUFFIX" in \
+    -raspbian) NODE_RED_TAG_SUFFIX='';; \
+    esac
+
+FROM nodered/node-red:${NODE_RED_VERSION}-${NODE_VERSION}${NODE_RED_TAG_SUFFIX}
 
 ARG HOMEKIT_BRIDGED_VERSION
 
@@ -39,21 +45,29 @@ ARG TARGETPLATFORM
 RUN case "$TARGETPLATFORM" in \
     linux\/amd64) S6_ARCH='amd64';; \
     linux\/arm/v7) S6_ARCH='armhf';; \
+    linux\/arm/v6) S6_ARCH='armhf';; \
     linux\/arm64) S6_ARCH='aarch64';; \
-    *) echo "unsupported architecture"; echo "target platform is $TARGETPLATFORM"; echo "arch is $ARCH"; exit 1 ;; \
+    *) echo "unsupported architecture"; exit 1 ;; \
     esac \
     && set -x \
     && curl -Lfs https://github.com/just-containers/s6-overlay/releases/download/v2.2.0.3/s6-overlay-${S6_ARCH}.tar.gz | tar xzf - -C / --no-same-owner
 
 # ffmpeg-for-homebridge
+ENV FFMPEG_OS='alpine-'
+
+RUN case "$TAG_SUFFIX" in \
+    -raspbian) FFMPEG_OS='raspbian-';; \
+    esac
+
 RUN case "$TARGETPLATFORM" in \
     linux\/amd64) FFMPEG_ARCH='x86_64';; \
     linux\/arm/v7) FFMPEG_ARCH='armv6l';; \
+    linux\/arm/v6) FFMPEG_ARCH='armv6l';; \
     linux\/arm64) FFMPEG_ARCH='aarch64';; \
-    *) echo "unsupported architecture"; echo "target platform is $TARGETPLATFORM"; echo "arch is $ARCH"; exit 1 ;; \
+    *) echo "unsupported architecture"; exit 1 ;; \
     esac \
     && set -x \
-    && curl -Lfs https://github.com/oznu/ffmpeg-for-homebridge/releases/latest/download/ffmpeg-alpine-${FFMPEG_ARCH}.tar.gz | tar xzf - -C / --no-same-owner
+    && curl -Lfs https://github.com/oznu/ffmpeg-for-homebridge/releases/latest/download/ffmpeg-${FFMPEG_OS}${FFMPEG_ARCH}.tar.gz | tar xzf - -C / --no-same-owner
 
 COPY package.json .
 RUN npm install --unsafe-perm --no-update-notifier --only=production
