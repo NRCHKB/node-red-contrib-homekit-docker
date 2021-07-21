@@ -21,8 +21,8 @@ jobs:
 
     strategy:
       matrix:
-        node: [10, 12]
-        suffix: ["", "-minimal"]
+        node: [10, 12, 14]
+        suffix: ["", "-minimal", "-raspbian"]
         
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
