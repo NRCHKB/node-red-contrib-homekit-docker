@@ -31,6 +31,7 @@ RUN set -ex \
       avahi-compat-libdns_sd \
       avahi-dev \
       dbus \
+      raspberrypi \
     && npm set package-lock=false
 
 ARG TARGETPLATFORM
