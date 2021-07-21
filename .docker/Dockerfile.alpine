@@ -34,13 +34,20 @@ RUN set -ex \
     && npm set package-lock=false
 
 ARG TARGETPLATFORM
+ARG FFMPEG_OS
+
+# vcgencmd
+RUN case "$FFMPEG_OS" in \
+    raspbian) set -x && apk add --no-cache raspberrypi;; \
+    esac
 
 # s6 overlay
 RUN case "$TARGETPLATFORM" in \
     linux\/amd64) S6_ARCH='amd64';; \
     linux\/arm/v7) S6_ARCH='armhf';; \
+    linux\/arm/v6) S6_ARCH='armhf';; \
     linux\/arm64) S6_ARCH='aarch64';; \
-    *) echo "unsupported architecture"; echo "target platform is $TARGETPLATFORM"; echo "arch is $ARCH"; exit 1 ;; \
+    *) echo "unsupported architecture"; exit 1 ;; \
     esac \
     && set -x \
     && curl -Lfs https://github.com/just-containers/s6-overlay/releases/download/v2.2.0.3/s6-overlay-${S6_ARCH}.tar.gz | tar xzf - -C / --no-same-owner
@@ -49,11 +56,12 @@ RUN case "$TARGETPLATFORM" in \
 RUN case "$TARGETPLATFORM" in \
     linux\/amd64) FFMPEG_ARCH='x86_64';; \
     linux\/arm/v7) FFMPEG_ARCH='armv6l';; \
+    linux\/arm/v6) FFMPEG_ARCH='armv6l';; \
     linux\/arm64) FFMPEG_ARCH='aarch64';; \
-    *) echo "unsupported architecture"; echo "target platform is $TARGETPLATFORM"; echo "arch is $ARCH"; exit 1 ;; \
+    *) echo "unsupported architecture"; exit 1 ;; \
     esac \
     && set -x \
-    && curl -Lfs https://github.com/oznu/ffmpeg-for-homebridge/releases/latest/download/ffmpeg-alpine-${FFMPEG_ARCH}.tar.gz | tar xzf - -C / --no-same-owner
+    && curl -Lfs https://github.com/oznu/ffmpeg-for-homebridge/releases/latest/download/ffmpeg-${FFMPEG_OS}-${FFMPEG_ARCH}.tar.gz | tar xzf - -C / --no-same-owner
 
 COPY package.json .
 RUN npm install --unsafe-perm --no-update-notifier --only=production
