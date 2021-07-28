@@ -148,6 +148,7 @@ jobs:
             TAG_SUFFIX=${{ steps.imageSettings.outputs.suffix }}
           tags: ${{ steps.imageSettings.outputs.tags }}
   dependabot:
+    needs: [build]
     runs-on: ubuntu-latest
     #if: ${{ github.actor == 'dependabot[bot]' }}
     steps:
