@@ -17,6 +17,10 @@ jobs:
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
       - uses: actions/checkout@v2
+      - run: gh pr merge --auto --merge "$PR_URL"
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - run: gh pr checkout "$PR_NUMBER"
         env:
           PR_NUMBER: ${{github.event.pull_request.number}}
@@ -28,8 +32,4 @@ jobs:
           node-version: '14'
       - run: npm version patch -m "[RELEASE] %s"
       - run: git push
-      - run: gh pr merge --auto --merge "$PR_URL"
-        env:
-          PR_URL: ${{github.event.pull_request.html_url}}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
        
