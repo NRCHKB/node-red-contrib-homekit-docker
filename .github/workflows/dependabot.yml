@@ -15,9 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.actor == 'dependabot[bot]' }}
     steps:
-      - uses: dependabot/fetch-metadata@v1.1.0
-        with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
       - uses: actions/checkout@v2
       - run: gh pr merge --auto --merge "$PR_URL"
         env:
