@@ -11,13 +11,16 @@ permissions:
 jobs:
   dependabot:
     runs-on: ubuntu-latest
-    if: ${{ github.actor == 'dependabot[bot]' }}
+    #if: ${{ github.actor == 'dependabot[bot]' }}
     steps:
       - uses: dependabot/fetch-metadata@v1.1.0
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
       - uses: actions/checkout@v2
-      - run: gh pr checkout ${{ github.event.pull_request.number }}
+      - run: gh pr checkout "$PR_NUMBER"
+        env:
+          PR_NUMBER: ${{github.event.pull_request.number}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - run: git config --global user.name 'Shaquu'
       - run: git config --global user.email 'tadeusz@hey.com'
       - uses: actions/setup-node@v2
