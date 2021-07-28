@@ -18,6 +18,7 @@ jobs:
         uses: dependabot/fetch-metadata@v1.1.0
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
+      - uses: actions/checkout@v2
       - name: Bump versions
         uses: remorses/bump-version@js
         with:
