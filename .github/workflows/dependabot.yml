@@ -13,17 +13,13 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.actor == 'dependabot[bot]' }}
     steps:
-      - name: Dependabot metadata
-        id: metadata
-        uses: dependabot/fetch-metadata@v1.1.0
+      - uses: dependabot/fetch-metadata@v1.1.0
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
       - uses: actions/checkout@v2
-      - name: Bump versions
-        uses: remorses/bump-version@js
+      - uses: actions/setup-node@v2
         with:
-          version_file: ./package.json
-          github_token: "${{ secrets.GITHUB_TOKEN }}"
-        env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          node-version: '14'
+      - run: npm version patch -m "[RELEASE] %s"
+      - run: git push
        
