@@ -149,13 +149,9 @@ jobs:
           tags: ${{ steps.imageSettings.outputs.tags }}
   dependabot:
     runs-on: ubuntu-latest
-    if: ${{ github.actor == 'dependabot[bot]' }}
+    #if: ${{ github.actor == 'dependabot[bot]' }}
     steps:
       - uses: actions/checkout@v2
-      - run: gh pr checkout "$PR_NUMBER"
-        env:
-          PR_NUMBER: ${{github.event.pull_request.number}}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - run: gh pr merge --auto --merge "$PR_URL"
         env:
           PR_URL: ${{github.event.pull_request.html_url}}
