@@ -150,7 +150,7 @@ jobs:
   dependabot:
     needs: [build]
     runs-on: ubuntu-latest
-    #if: ${{ github.actor == 'dependabot[bot]' }}
+    if: ${{ github.actor == 'dependabot[bot]' }}
     steps:
       - uses: actions/checkout@v2
       - name: Dependabot metadata
