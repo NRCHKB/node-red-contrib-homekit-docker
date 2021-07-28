@@ -21,6 +21,6 @@ jobs:
       - name: Bump versions
         uses: remorses/bump-version@js
         with:
-            version_file: ./package.json
-            github_token: ${{ secrets.GITHUB_TOKEN }}
+          version_file: ./package.json
+          github_token: ${{ secrets.GITHUB_TOKEN }}
        
