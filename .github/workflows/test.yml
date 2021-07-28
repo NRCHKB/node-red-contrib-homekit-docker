@@ -153,10 +153,11 @@ jobs:
     #if: ${{ github.actor == 'dependabot[bot]' }}
     steps:
       - uses: actions/checkout@v2
-      - run: gh pr merge --auto --merge "$PR_URL"
-        env:
-          PR_URL: ${{github.event.pull_request.html_url}}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v1.1.0
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
       - run: git config --global user.name 'Shaquu'
       - run: git config --global user.email 'tadeusz@hey.com'
       - uses: actions/setup-node@v2
@@ -164,4 +165,8 @@ jobs:
           node-version: '14'
       - run: npm version patch -m "[RELEASE] %s"
       - run: git push
+      - run: gh pr merge --auto --merge "$PR_URL"
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
        
