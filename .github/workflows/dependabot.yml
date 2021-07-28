@@ -20,6 +20,12 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
+      - run: git config --global user.name 'Shaquu'
+      - run: git config --global user.email 'tadeusz@hey.com'
       - run: npm version patch -m "[RELEASE] %s"
       - run: git push
+      - run: gh pr merge --auto --merge "$PR_URL"
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
        
