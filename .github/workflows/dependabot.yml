@@ -17,11 +17,12 @@ jobs:
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
       - uses: actions/checkout@v2
+      - run: gh pr checkout ${{ github.event.pull_request.number }}
+      - run: git config --global user.name 'Shaquu'
+      - run: git config --global user.email 'tadeusz@hey.com'
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
-      - run: git config --global user.name 'Shaquu'
-      - run: git config --global user.email 'tadeusz@hey.com'
       - run: npm version patch -m "[RELEASE] %s"
       - run: git push
       - run: gh pr merge --auto --merge "$PR_URL"
