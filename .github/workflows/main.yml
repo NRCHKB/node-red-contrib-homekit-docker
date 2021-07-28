@@ -6,9 +6,9 @@ name: Docker Build
 on:
   release:
     types: [ published ]
-  #push:
-  #  branches:
-  #    - master
+  push:
+    branches:
+      - master
 
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
