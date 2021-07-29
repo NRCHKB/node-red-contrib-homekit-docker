@@ -166,10 +166,12 @@ jobs:
           git config --global user.name 'Shaquu'
           git config --global user.email 'tadeusz@hey.com'
           gh pr checkout "$PR_NUMBER"
+          gh pr status
           npm version patch -m "[RELEASE] %s"
           git push https://${{ secrets.GITHUB_TOKEN }}@github.com/NRCHKB/node-red-contrib-homekit-docker.git
           gh pr merge --auto --merge "$PR_URL"
         env:
           PR_NUMBER: ${{github.event.pull_request.number}}
+          PR_URL: ${{github.event.pull_request.html_url}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
        
