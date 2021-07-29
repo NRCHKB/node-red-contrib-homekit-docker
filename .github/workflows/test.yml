@@ -162,7 +162,7 @@ jobs:
         run: |
           git config --global user.name 'dependabot[bot]'
           git config --global user.email 'dependabot[bot]@users.noreply.github.com'
-          npm version patch -m "[RELEASE] %s
+          npm version patch -m "[RELEASE] %s"
         env:
           PR_NUMBER: ${{github.event.pull_request.number}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
