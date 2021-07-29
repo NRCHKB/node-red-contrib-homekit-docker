@@ -13,7 +13,7 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   build:
-    needs: [dependabot]
+    #needs: [dependabot]
     env:
       # Setting the defaults up front
       LATEST_NODE: 10
@@ -23,10 +23,10 @@ jobs:
 
     strategy:
       matrix:
-        node: [10]
-        suffix: [""]
-        #node: [ 10, 12, 14 ]
-        #suffix: [ "", "-minimal", "-raspbian" ]
+        #node: [10]
+        #suffix: [""]
+        node: [ 10, 12, 14 ]
+        suffix: [ "", "-minimal", "-raspbian" ]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -151,9 +151,9 @@ jobs:
             TAG_SUFFIX=${{ steps.imageSettings.outputs.suffix }}
           tags: ${{ steps.imageSettings.outputs.tags }}
   dependabot:
-    #needs: [build]
+    needs: [build]
     runs-on: ubuntu-latest
-    #if: ${{ github.actor == 'dependabot[bot]' }}
+    if: ${{ github.actor == 'dependabot[bot]' }}
     steps:
       - uses: actions/setup-node@v2
         with:
