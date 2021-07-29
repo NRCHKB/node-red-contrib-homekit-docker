@@ -152,7 +152,7 @@ jobs:
   dependabot:
     needs: [build]
     runs-on: ubuntu-latest
-    if: ${{ github.actor == 'dependabot[bot]' }}
+    #if: ${{ github.actor == 'dependabot[bot]' }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -169,10 +169,10 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.DEPENDABOT_TOKEN }}
           branch: ${{ github.ref }}
       - uses: fastify/github-action-merge-dependabot@v1
-        if: ${{ github.actor == 'dependabot[bot]' && github.event_name == 'pull_request' }}
+        #if: ${{ github.actor == 'dependabot[bot]' && github.event_name == 'pull_request' }}
         with:
-          github-token: ${{secrets.github_token}}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
        
