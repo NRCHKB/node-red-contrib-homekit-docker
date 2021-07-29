@@ -159,6 +159,8 @@ jobs:
         with:
           node-version: '14'
       - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
       - run: |
           git config user.name dependabot[bot]
           git config user.email dependabot[bot]@users.noreply.github.com
