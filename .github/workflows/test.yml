@@ -166,8 +166,8 @@ jobs:
           git config user.email dependabot[bot]@users.noreply.github.com
           npm version patch -m "[RELEASE] %s"
           git push
-      - uses: fastify/github-action-merge-dependabot@v1
+      - uses: fastify/github-action-merge-dependabot@v2
         #if: ${{ github.actor == 'dependabot[bot]' && github.event_name == 'pull_request' }}
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
        
