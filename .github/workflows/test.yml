@@ -22,8 +22,10 @@ jobs:
 
     strategy:
       matrix:
-        node: [ 10, 12, 14 ]
-        suffix: [ "", "-minimal", "-raspbian" ]
+        node: [10]
+        suffix: [""]
+        #node: [ 10, 12, 14 ]
+        #suffix: [ "", "-minimal", "-raspbian" ]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -153,25 +155,24 @@ jobs:
     if: ${{ github.actor == 'dependabot[bot]' }}
     steps:
       - uses: actions/checkout@v2
-      - name: Dependabot metadata
-        id: metadata
-        uses: dependabot/fetch-metadata@v1.1.0
-        with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
       - name: Bump version and set auto-merge
         run: |
-          git config --global user.name 'Shaquu'
-          git config --global user.email 'tadeusz@hey.com'
-          gh pr checkout "$PR_NUMBER"
-          gh pr status
-          npm version patch -m "[RELEASE] %s"
-          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/NRCHKB/node-red-contrib-homekit-docker.git
-          gh pr merge --auto --merge "$PR_URL"
+          git config --global user.name 'dependabot[bot]'
+          git config --global user.email 'dependabot[bot]@users.noreply.github.com'
+          npm version patch -m "[RELEASE] %s
         env:
           PR_NUMBER: ${{github.event.pull_request.number}}
-          PR_URL: ${{github.event.pull_request.html_url}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+      - uses: fastify/github-action-merge-dependabot@v1
+        if: ${{ github.actor == 'dependabot[bot]' && github.event_name == 'pull_request' }}
+        with:
+          github-token: ${{secrets.github_token}}
        
