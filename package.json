@@ -24,8 +24,11 @@
     ],
     "dependencies": {
         "node-red": "2.0.5",
-        "node-red-contrib-homekit-bridged": "1.3.6",
-        "debug": "4.0.0"
+        "@node-red/editor-api": "2.0.4",
+        "@node-red/nodes": "2.0.4",
+        "@node-red/runtime": "2.0.4",
+        "@node-red/util": "2.0.4",
+        "node-red-contrib-homekit-bridged": "1.3.6"
     },
     "engines": {
         "node": ">=10"
