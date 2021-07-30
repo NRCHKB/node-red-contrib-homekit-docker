@@ -82,6 +82,8 @@ jobs:
           done <<< "${{ steps.meta.outputs.tags }}"
 
           CURRENT_TAG="$(git describe --tags --abbrev=0)"
+          echo "current tag $CURRENT_TAG"
+
           if [[ "$CURRENT_TAG" =~ ^v[0-9\.-]*$ ]]; then
             IMAGE=${{ env.DEFAULT_IMAGE }}
             PUSH="true"
