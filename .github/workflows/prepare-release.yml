@@ -1,4 +1,4 @@
-name: Bump version and push tag
+name: Prepare release
 
 on:
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
     - cron: "0 0 * * *"
 
 jobs:
-  bump:
+  release:
     name: Check for new features to be released
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/master' }}
@@ -45,3 +45,7 @@ jobs:
           tag-prefix: v
         env:
           GITHUB_TOKEN: ${{ secrets.NRCHKB_DOCKER }}
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Create release
+        uses: softprops/action-gh-release@v1
