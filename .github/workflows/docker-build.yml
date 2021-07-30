@@ -4,6 +4,10 @@ on:
   workflow_dispatch:
   release:
     types: [ published ]
+  workflow_run:
+    workflows: ["Prepare release"]
+    types:
+      - completed
 
 jobs:
   build:

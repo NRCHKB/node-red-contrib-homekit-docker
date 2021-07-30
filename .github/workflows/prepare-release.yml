@@ -33,21 +33,21 @@ jobs:
           echo "from: $LAST_TAG"
           echo "to: $CURRENT_TAG"
           echo "changes: $ANY_CHANGES"
+      - name: Stop if no changes
+        if: ${{ steps.diff.outputs.any_changes != 'true' }}
+        run: exit 1
       - name: Setup Node.js
-        if: ${{ steps.diff.outputs.any_changes == 'true' }}
         uses: actions/setup-node@v2
         with:
           node-version: '12'
       - name: Bump
         id: version-bump
-        if: ${{ steps.diff.outputs.any_changes == 'true' }}
         uses: phips28/gh-action-bump-version@master
         with:
           tag-prefix: v
         env:
           GITHUB_TOKEN: ${{ secrets.NRCHKB_DOCKER }}
       - name: Checkout
-        if: ${{ steps.diff.outputs.any_changes == 'true' }}
         uses: actions/checkout@v2
       - name: Create release
         if: ${{ steps.diff.outputs.any_changes == 'true' }}
