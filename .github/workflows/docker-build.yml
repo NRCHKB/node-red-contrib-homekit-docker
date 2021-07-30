@@ -63,7 +63,7 @@ jobs:
         run: |
           NODE_RED_VERSION=""
           if [[ "${{matrix.node}}" == "10" ]]; then
-            NODE_RED_VERSION="1.3.5"
+            NODE_RED_VERSION="1.3.6"
             sed -ie "s/\"node-red\":[^\"].*\"/\"node-red\": \"${NODE_RED_VERSION}\"/g" package.json
           else
             NODE_RED_VERSION=$(grep -oE "\"node-red\": \"(\w*.\w*.\w*.\w*.\w*.)" package.json | cut -d\" -f4)
