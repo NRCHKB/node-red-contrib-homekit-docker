@@ -34,7 +34,6 @@ jobs:
         with:
           node-version: '12'
       - name: Bump
-        id: $commit-difference-count
         uses: phips28/gh-action-bump-version@master
         with:
           tag-prefix: v
