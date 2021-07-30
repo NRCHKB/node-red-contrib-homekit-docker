@@ -1,0 +1,42 @@
+name: Bump version and push tag
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  checkdiff:
+    name: Check for new commits
+    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/master' }}
+    outputs:
+      diff: ${{ steps.diff.outputs.commit-difference-count }}
+    steps:
+      - name: Get Commit Difference Count Between Two Branches
+        id: diff
+        uses: jessicalostinspace/commit-difference-action@v1.0.0
+        with:
+          secondary-branch: ${{ github.ref }}
+
+  bumpversion:
+    needs: [checkdiff]
+    name: Bump Version on master
+    runs-on: ubuntu-latest
+    if: ${{ needs.checkdiff.outputs.diff > 0 }}
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+      - name: Bump
+        id: $commit-difference-count
+        uses: phips28/gh-action-bump-version@master
+        with:
+          tag-prefix: v
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
