@@ -30,6 +30,8 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: Show Env
         run: env
       - name: Docker Metadata
@@ -79,7 +81,7 @@ jobs:
             fi
           done <<< "${{ steps.meta.outputs.tags }}"
 
-          LAST_TAG="$(git describe --tags --abbrev=0)"
+          CURRENT_TAG="$(git describe --tags --abbrev=0)"
           if [[ "$CURRENT_TAG" =~ ^v[0-9\.-]*$ ]]; then
             IMAGE=${{ env.DEFAULT_IMAGE }}
             PUSH="true"
