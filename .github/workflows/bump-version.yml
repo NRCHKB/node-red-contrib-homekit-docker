@@ -7,15 +7,15 @@ on:
 
 jobs:
   checkdiff:
-    name: Check for new commits
+    name: Check for new features to be released
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/master' }}
     outputs:
-      diff: ${{ steps.diff.outputs.commit-difference-count }}
+      any_changes: ${{ steps.diff.outputs.any_changes }}
     steps:
-      - name: Get Commit Difference Count Between Two Branches
+      - name: Get diff since last tag
         id: diff
-        uses: jessicalostinspace/commit-difference-action@v1.0.0
+        uses: jsmith/changes-since-last-tag@v1
         with:
           secondary-branch: ${{ github.ref }}
 
@@ -23,7 +23,7 @@ jobs:
     needs: [checkdiff]
     name: Bump Version on master
     runs-on: ubuntu-latest
-    if: ${{ needs.checkdiff.outputs.diff > 0 }}
+    if: ${{ needs.checkdiff.outputs.any_changes == 'true' }}
     steps:
       - name: Checkout source code
         uses: actions/checkout@v2
