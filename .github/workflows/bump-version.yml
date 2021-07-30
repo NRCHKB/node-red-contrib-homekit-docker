@@ -6,19 +6,40 @@ on:
     - cron: "0 0 * * *"
 
 jobs:
-  bumpversion:
-    name: Bump Version on master
+  bump:
+    name: Check for new features to be released
     runs-on: ubuntu-latest
+    #if: ${{ github.ref == 'refs/heads/master' }}
     steps:
-      - name: Checkout source code
+      - name: Checkout
         uses: actions/checkout@v2
         with:
-          ref: ${{ github.ref }}
+          fetch-depth: 0
+      - name: Changes since last tag
+        id: diff
+        run: |
+          LAST_TAG="$(git describe --tags --abbrev=0)"
+          CURRENT_TAG="${{ github.ref }}"
+          CHANGES="$(git diff $LAST_TAG $CURRENT_TAG --stat)"
+
+          ANY_CHANGES='false'
+          if [[ "$CHANGES" != "" ]]; then
+            ANY_CHANGES='true'
+          fi
+
+          echo "::set-output name=last-tag::$LAST_TAG"
+          echo "::set-output name=any_changes::$ANY_CHANGES"
+
+          echo "from: $LAST_TAG"
+          echo "to: $CURRENT_TAG"
+          echo "changes: $ANY_CHANGES"
       - name: Setup Node.js
+        if: ${{ steps.diff.outputs.any_changes == 'true' }}
         uses: actions/setup-node@v2
         with:
           node-version: '12'
       - name: Bump
+        if: ${{ steps.diff.outputs.any_changes == 'true' }}
         uses: phips28/gh-action-bump-version@master
         with:
           tag-prefix: v
