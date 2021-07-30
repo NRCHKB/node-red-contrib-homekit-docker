@@ -39,6 +39,7 @@ jobs:
         with:
           node-version: '12'
       - name: Bump
+        id: version-bump
         if: ${{ steps.diff.outputs.any_changes == 'true' }}
         uses: phips28/gh-action-bump-version@master
         with:
@@ -46,6 +47,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.NRCHKB_DOCKER }}
       - name: Checkout
+        if: ${{ steps.diff.outputs.any_changes == 'true' }}
         uses: actions/checkout@v2
       - name: Create release
+        if: ${{ steps.diff.outputs.any_changes == 'true' }}
         uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.version-bump.outputs.newTag }}
