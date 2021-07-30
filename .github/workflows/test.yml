@@ -169,7 +169,7 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.DEPENDABOT_TOKEN }}
+          github_token: ${{ secrets.NRCHKB_DOCKER }}
           branch: ${{ github.ref }}
       - uses: fastify/github-action-merge-dependabot@v2.1.1
         with:
