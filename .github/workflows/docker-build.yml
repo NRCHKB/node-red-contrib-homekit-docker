@@ -81,7 +81,12 @@ jobs:
             fi
           done <<< "${{ steps.meta.outputs.tags }}"
 
-          CURRENT_TAG="$(git describe --tags --abbrev=0)"
+          CURRENT_TAG="$(echo "$GITHUB_REF" | awk -F '/' '{ print $3}')"
+
+          if [ "$CURRENT_TAG" == "" ]; then
+            CURRENT_TAG="$(git describe --tags --abbrev=0)"
+          fi
+
           echo "current tag $CURRENT_TAG"
 
           if [[ "$CURRENT_TAG" =~ ^v[0-9\.-]*$ ]]; then
