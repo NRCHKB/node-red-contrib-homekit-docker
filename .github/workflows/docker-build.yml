@@ -83,7 +83,7 @@ jobs:
 
           CURRENT_TAG="$(echo "$GITHUB_REF" | awk -F '/' '{ print $3}')"
 
-          if [ ! "$CURRENT_TAG" =~ ^v[0-9\.-]*$ ]; then
+          if [[ ! "$CURRENT_TAG" =~ ^v[0-9\.-]*$ ]]; then
             CURRENT_TAG="$(git describe --tags --abbrev=0)"
           fi
 
