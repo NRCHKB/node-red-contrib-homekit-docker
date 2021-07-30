@@ -6,24 +6,9 @@ on:
     - cron: "0 0 * * *"
 
 jobs:
-  checkdiff:
-    name: Check for new features to be released
-    runs-on: ubuntu-latest
-    if: ${{ github.ref == 'refs/heads/master' }}
-    outputs:
-      any_changes: ${{ steps.diff.outputs.any_changes }}
-    steps:
-      - name: Get diff since last tag
-        id: diff
-        uses: jsmith/changes-since-last-tag@v1
-        with:
-          secondary-branch: ${{ github.ref }}
-
   bumpversion:
-    needs: [checkdiff]
     name: Bump Version on master
     runs-on: ubuntu-latest
-    if: ${{ needs.checkdiff.outputs.any_changes == 'true' }}
     steps:
       - name: Checkout source code
         uses: actions/checkout@v2
