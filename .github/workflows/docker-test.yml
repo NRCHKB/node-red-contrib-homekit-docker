@@ -5,7 +5,7 @@ on:
   pull_request:
 
 jobs:
-  build:
+  testbuild:
     env:
       LATEST_NODE: 10
       DEFAULT_IMAGE: nrchkb/node-red-homekit

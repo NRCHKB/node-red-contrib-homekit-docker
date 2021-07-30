@@ -1,6 +1,7 @@
 name: Docker images - build
 
 on:
+  workflow_dispatch:
   release:
     types: [ published ]
 
