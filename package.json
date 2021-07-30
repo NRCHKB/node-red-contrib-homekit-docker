@@ -24,7 +24,7 @@
     ],
     "dependencies": {
         "node-red": "2.0.5",
-        "@node-red/editor-api": "2.0.4",
+        "@node-red/editor-api": "2.0.5",
         "@node-red/nodes": "2.0.4",
         "@node-red/runtime": "2.0.4",
         "@node-red/util": "2.0.4",
