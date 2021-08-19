@@ -54,3 +54,9 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ steps.version-bump.outputs.newTag }}
+      - name: Dispatch release build
+        if: ${{ steps.diff.outputs.any_changes == 'true' }}
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.NRCHKB_DOCKER }}
+          event-type: docker-build

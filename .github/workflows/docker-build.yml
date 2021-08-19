@@ -4,14 +4,11 @@ on:
   workflow_dispatch:
   release:
     types: [ published ]
-  workflow_run:
-    workflows: ["Prepare release"]
-    types:
-      - completed
+  repository_dispatch:
+    types: [ docker-build ]
 
 jobs:
   build:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     env:
       LATEST_NODE: 10
       DEFAULT_IMAGE: nrchkb/node-red-homekit
