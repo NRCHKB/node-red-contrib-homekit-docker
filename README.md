@@ -1,5 +1,5 @@
 # Node-RED-homekit-docker
-[![Docker Build](https://github.com/NRCHKB/node-red-contrib-homekit-docker/actions/workflows/main.yml/badge.svg)](https://github.com/NRCHKB/node-red-contrib-homekit-docker/actions/workflows/main.yml)
+[![Docker Build](https://github.com/NRCHKB/node-red-contrib-homekit-docker/actions/workflows/docker-build.yml/badge.svg)](https://github.com/NRCHKB/node-red-contrib-homekit-docker/actions/workflows/docker-build.yml)
 [![DockerHub Pull](https://img.shields.io/docker/pulls/nrchkb/node-red-homekit.svg)](https://hub.docker.com/r/nrchkb/node-red-homekit)
 [![DockerHub Star](https://img.shields.io/docker/stars/nrchkb/node-red-homekit.svg?maxAge=2592000)](https://hub.docker.com/r/nrchkb/node-red-homekit)
  
