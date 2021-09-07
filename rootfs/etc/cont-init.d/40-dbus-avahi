@@ -32,5 +32,5 @@ NODE_RED_VERSION=$(grep -oE "\"node-red\": \"(\w*.\w*.\w*.\w*.\w*.)" package.jso
 sed -i "s/NODE_RED_VERSION/${NODE_RED_VERSION}/" /etc/avahi/services/http.service
 
 if [ ! -z "$PORT" ]; then
-  sed -i "s/<port>1880</port>/<port>${PORT}</port>/" /etc/avahi/services/http.service
+  sed -i "s/<port>1880<\/port>/<port>${PORT}<\/port>/" /etc/avahi/services/http.service
 fi
