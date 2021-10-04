@@ -17,10 +17,20 @@ sleep 1
 
 # avahi config
 cp /defaults/avahi-daemon.conf /etc/avahi/avahi-daemon.conf
+rm -rf /etc/avahi/services/*
+cp /defaults/avahi-http.service /etc/avahi/services/http.service
 
 # fix for synology dsm - see #35
 if [ ! -z "$DSM_HOSTNAME" ]; then
   sed -i "s/.*host-name.*/host-name=${DSM_HOSTNAME}/" /etc/avahi/avahi-daemon.conf
 else
   sed -i "s/.*host-name.*/#host-name=/" /etc/avahi/avahi-daemon.conf
+fi
+
+# avahi config service http
+NODE_RED_VERSION=$(grep -oE "\"node-red\": \"(\w*.\w*.\w*.\w*.\w*.)" package.json | cut -d\" -f4)
+sed -i "s/NODE_RED_VERSION/${NODE_RED_VERSION}/" /etc/avahi/services/http.service
+
+if [ ! -z "$PORT" ]; then
+  sed -i "s/<port>1880<\/port>/<port>${PORT}<\/port>/" /etc/avahi/services/http.service
 fi
