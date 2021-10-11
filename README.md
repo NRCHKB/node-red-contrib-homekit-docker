@@ -14,7 +14,7 @@ Currently, Node-RED-homekit has support for multiple architectures:
 - `arm32v7` : based on linux Alpine - (i.e. Raspberry Pi 2, 3, 4)
 - `arm64v8` : based on linux Alpine - (i.e. Pine64)
 
-**Note**: Currently there is a bug in Docker's architecture detection that fails for arm32v6 - eg Raspberry Pi Zero or 1. For these devices you currently need to specify the full image tag for arm32v6.
+**Note**: Currently there is a bug in Docker's architecture detection that fails for arm32v6 - e.g. Raspberry Pi Zero or 1. For these devices you currently need to specify the full image tag for arm32v6.
 
 **Note**: As of Node-RED 2.0.0 release NodeJS 10 is considered deprecated. Next major NRCHKB release will drop require NodeJS >= 12. Using `latest-12` you can use our image with Node-RED 2.0.0 already! 
 
@@ -108,7 +108,7 @@ For more examples and ideas, visit:
  https://docs.docker.com/get-started/
 ```
 
-If the above steps went as expected, you are ready to run the `nrchkb/node-red-homekit` image as a container. But before that we create a directory on the pi host so that all node-red / node-red-homekit files are stored out side the container on your raspberry pi.
+If the above steps went as expected, you are ready to run the `nrchkb/node-red-homekit` image as a container. But before that we create a directory on the pi host so that all node-red / node-red-homekit files are stored outside the container on your raspberry pi.
 
 7) Make directory in your pi user's home directory:
 
@@ -116,7 +116,7 @@ If the above steps went as expected, you are ready to run the `nrchkb/node-red-h
 mkdir node-red-homekit
 ```
 
-8) Run the Docker run command to deploy the `nrchkb/node-red-homekit` image as a container and where the container `/data` directory is binded to the `/home/pi/node-red-homekit` directory on your Raspberry PI.
+8) Run the Docker run command to deploy the `nrchkb/node-red-homekit` image as a container and where the container `/data` directory is bound to the `/home/pi/node-red-homekit` directory on your Raspberry PI.
 
 ```bash
 docker run -d --net=host -v ~/node-red-homekit:/data --restart always -e TZ=Europe/Amsterdam -e DEBUG=NRCHKB:* --name node-red-homekit nrchkb/node-red-homekit
@@ -160,7 +160,7 @@ docker run -d --net=host -v ~/node-red-homekit:/data --restart always -e TZ=Euro
 This runs the container based on the latest `nrchkb/node-red-homekit` image and retains your flows!
 
 ### Docker Compose (including install Docker Compose)
-For demo purpose we us a Raspberry Pi with Docker installed (see )
+For demo purpose we use a Raspberry Pi with Docker installed (see )
 
 1) Install required packages for Docker Compose
 
