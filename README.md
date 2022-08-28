@@ -16,7 +16,7 @@ Currently, Node-RED-homekit has support for multiple architectures:
 
 **Note**: Currently there is a bug in Docker's architecture detection that fails for arm32v6 - e.g. Raspberry Pi Zero or 1. For these devices you currently need to specify the full image tag for arm32v6.
 
-**Note**: As of Node-RED 2.0.0 release NodeJS 10 is considered deprecated. Next major NRCHKB release will drop require NodeJS >= 12. Using `latest-12` you can use our image with Node-RED 2.0.0 already! 
+**Note**: As of Node-RED 3.0.0 release, we are no longer building docker image for version 1. At the same time, images with NodeJS 10 and 12 are dropped, Node-RED 2 will be shipped with NodeJS 14. Next major NRCHKB release will require NodeJS >= 16.
 
 ### Quick Start (for those already running Docker)
 
