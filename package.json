@@ -1,6 +1,6 @@
 {
     "name": "node-red-contrib-homekit-docker",
-    "version": "1.15.11",
+    "version": "2.0.0",
     "description": "Node-RED nodes to simulate Apple HomeKit devices.",
     "homepage": "https://nrchkb.github.io/",
     "license": "Apache-2.0",
@@ -18,15 +18,15 @@
         },
         {
             "name": "Tadeusz Wyrzykowski",
-            "email": "tadeusz@hey.com",
+            "email": "shaquu@icloud.com",
             "url": "https://github.com/Shaquu"
         }
     ],
     "dependencies": {
-        "node-red": "2.2.3",
+        "node-red": "3.0.2",
         "node-red-contrib-homekit-bridged": "1.4.3"
     },
     "engines": {
-        "node": ">=10"
+        "node": ">=14"
     }
 }
