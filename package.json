@@ -1,32 +1,32 @@
 {
-    "name": "node-red-contrib-homekit-docker",
-    "version": "2.0.3",
-    "description": "Node-RED nodes to simulate Apple HomeKit devices.",
-    "homepage": "https://nrchkb.github.io/",
-    "license": "Apache-2.0",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/NRCHKB/node-red-contrib-homekit-docker"
+  "name": "node-red-contrib-homekit-docker",
+  "version": "3.0.0",
+  "description": "Node-RED nodes to simulate Apple HomeKit devices.",
+  "homepage": "https://nrchkb.github.io/",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NRCHKB/node-red-contrib-homekit-docker"
+  },
+  "main": "node_modules/node-red/red/red.js",
+  "scripts": {
+    "start": "node $NODE_OPTIONS node_modules/node-red/red.js $FLOWS"
+  },
+  "contributors": [
+    {
+      "name": "Raymond Mouthaan"
     },
-    "main": "node_modules/node-red/red/red.js",
-    "scripts": {
-        "start": "node $NODE_OPTIONS node_modules/node-red/red.js $FLOWS"
-    },
-    "contributors": [
-        {
-            "name": "Raymond Mouthaan"
-        },
-        {
-            "name": "Tadeusz Wyrzykowski",
-            "email": "shaquu@icloud.com",
-            "url": "https://github.com/Shaquu"
-        }
-    ],
-    "dependencies": {
-        "node-red": "3.1.3",
-        "node-red-contrib-homekit-bridged": "1.5.0"
-    },
-    "engines": {
-        "node": ">=14"
+    {
+      "name": "Tadeusz Wyrzykowski",
+      "email": "shaquu@icloud.com",
+      "url": "https://github.com/Shaquu"
     }
+  ],
+  "dependencies": {
+    "node-red": "3.1.3",
+    "node-red-contrib-homekit-bridged": "1.5.0"
+  },
+  "engines": {
+    "node": ">=14"
+  }
 }
