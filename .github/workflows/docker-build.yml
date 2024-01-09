@@ -17,7 +17,7 @@ jobs:
 
     strategy:
       matrix:
-        node: [14, 16, 18, 20]
+        node: [14, 16, 18]
         suffix: ["", "-minimal", "-raspbian"]
 
     steps:

@@ -28,9 +28,9 @@ COPY rootfs /
 # Install tools
 RUN set -ex \
     && apk add --no-cache --virtual .run-deps \
-      avahi-compat-libdns_sd \
-      avahi-dev \
-      dbus \
+    avahi-compat-libdns_sd \
+    avahi-dev \
+    dbus \
     && npm set package-lock=false
 
 ARG TARGETPLATFORM
@@ -61,7 +61,7 @@ RUN case "$TARGETPLATFORM" in \
     *) echo "unsupported architecture"; exit 1 ;; \
     esac \
     && set -x \
-    && curl -Lfs https://github.com/oznu/ffmpeg-for-homebridge/releases/latest/download/ffmpeg-${FFMPEG_OS}-${FFMPEG_ARCH}.tar.gz | tar xzf - -C / --no-same-owner
+    && curl -Lfs https://github.com/homebridge/ffmpeg-for-homebridge/releases/latest/download/ffmpeg-${FFMPEG_OS}-${FFMPEG_ARCH}.tar.gz | tar xzf - -C / --no-same-owner
 
 COPY package.json .
 RUN npm install --unsafe-perm --no-update-notifier --only=production
