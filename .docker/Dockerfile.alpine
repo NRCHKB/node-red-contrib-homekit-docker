@@ -22,6 +22,9 @@ LABEL org.label-schema.build-date=${BUILD_DATE} \
 
 USER root
 
+RUN apk update
+WORKDIR /build
+
 # root filesystem
 COPY rootfs /
 
@@ -38,7 +41,7 @@ ARG FFMPEG_OS
 
 # vcgencmd
 RUN case "$FFMPEG_OS" in \
-    raspbian) set -x && apk add --no-cache raspberrypi;; \
+    raspbian) set -x && apk add --no-cache cmake; git clone https://github.com/raspberrypi/utils.git; cd utils/vcgencmd; cmake .; make; make install; \
     esac
 
 # s6 overlay
@@ -55,13 +58,13 @@ RUN case "$TARGETPLATFORM" in \
 # ffmpeg-for-homebridge
 RUN case "$TARGETPLATFORM" in \
     linux\/amd64) FFMPEG_ARCH='x86_64';; \
-    linux\/arm/v7) FFMPEG_ARCH='armv6l';; \
-    linux\/arm/v6) FFMPEG_ARCH='armv6l';; \
+    linux\/arm/v7) FFMPEG_ARCH='arm32v7';; \
+    linux\/arm/v6) FFMPEG_ARCH='arm32v7';; \
     linux\/arm64) FFMPEG_ARCH='aarch64';; \
     *) echo "unsupported architecture"; exit 1 ;; \
     esac \
     && set -x \
-    && curl -Lfs https://github.com/homebridge/ffmpeg-for-homebridge/releases/latest/download/ffmpeg-${FFMPEG_OS}-${FFMPEG_ARCH}.tar.gz | tar xzf - -C / --no-same-owner
+    && curl -Lfs https://github.com/homebridge/ffmpeg-for-homebridge/releases/latest/download/ffmpeg-alpine-${FFMPEG_ARCH}.tar.gz | tar xzf - -C / --no-same-owner
 
 COPY package.json .
 RUN npm install --unsafe-perm --no-update-notifier --only=production
@@ -75,6 +78,7 @@ RUN npm install passport-openidconnect \
 # Modified file adds profile in line 244 to get userinfo
 COPY strategy.js /usr/src/node-red/node_modules/passport-openidconnect/lib/strategy.js
 
-RUN setcap 'cap_net_bind_service=+ep' `which node`
+RUN apk add --no-cache libcap \
+    && setcap 'cap_net_bind_service=+ep' `which node`
 
 ENTRYPOINT [ "/init" ]
