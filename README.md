@@ -235,7 +235,7 @@ Synology users need to add the environment variable DSM_HOSTNAME.
 Click the Environment tab and add a new environment variable named DSM_HOSTNAME. The value of the DSM_HOSTNAME environment variable should exactly match the server name as shown under Synology DSM Control Panel -> Info Center -> Server name, it should contain no spaces or special characters.
 
 ```bash
-docker run it --net=host -v <path_on_host>:/data -e DSM_HOSTNAME=<synology_hostname> -e TZ=Europe/Amsterdam -e DEBUG=NRCHKB:* --name=homekit nrchkb/node-red-homekit:<tag>
+docker run -it --net=host -v <path_on_host>:/data -e DSM_HOSTNAME=<synology_hostname> -e TZ=Europe/Amsterdam -e DEBUG=NRCHKB:* --name=homekit nrchkb/node-red-homekit:<tag>
 ```
 
 ### Permissions
@@ -263,7 +263,7 @@ To debug NRCHKB you have to add environment variable to command running node-red
 To do that modify starting script like below:
 
 ```bash
-docker run it -e "DEBUG=NRCHKB*,HAP-NodeJS*" --net=host -v <path_on_host>:/data -e DSM_HOSTNAME=<synology_hostname> -e TZ=Europe/Amsterdam -e DEBUG=NRCHKB:* --name=homekit nrchkb/node-red-homekit:<tag>
+docker run -it -e "DEBUG=NRCHKB*,HAP-NodeJS*" --net=host -v <path_on_host>:/data -e DSM_HOSTNAME=<synology_hostname> -e TZ=Europe/Amsterdam -e DEBUG=NRCHKB:* --name=homekit nrchkb/node-red-homekit:<tag>
 ```
 
 ### Node-RED Docker official
