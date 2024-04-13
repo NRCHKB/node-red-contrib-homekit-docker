@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-homekit-docker",
-  "version": "3.0.12",
+  "version": "3.0.13",
   "description": "Node-RED nodes to simulate Apple HomeKit devices.",
   "homepage": "https://nrchkb.github.io/",
   "license": "Apache-2.0",
