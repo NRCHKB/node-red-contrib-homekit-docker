@@ -40,7 +40,17 @@ ARG FFMPEG_OS
 
 # vcgencmd
 RUN case "$FFMPEG_OS" in \
-    raspbian) set -x && apk add --no-cache cmake && git clone https://github.com/raspberrypi/utils.git && cd utils/vcgencmd && cmake . && make && make install && cd ../.. && rm -r utils \
+    raspbian) \
+      set -x && \
+      apk add --no-cache cmake && \
+      git clone https://github.com/raspberrypi/utils.git && \
+      cd utils/vcgencmd && \
+      cmake . && \
+      make && \
+      make install && \
+      cd ../.. && \
+      rm -r utils \
+      ;; \
     esac
 
 # s6 overlay
