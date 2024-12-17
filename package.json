@@ -23,7 +23,7 @@
     }
   ],
   "dependencies": {
-    "node-red": "3.1.14",
+    "node-red": "3.1.15",
     "node-red-contrib-homekit-bridged": "1.7.2"
   },
   "engines": {
