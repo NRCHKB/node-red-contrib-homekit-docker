@@ -6,6 +6,6 @@ updates:
       interval: "daily"
     ignore:
       - dependency-name: "node-red"
-        update-types: ["version-update:semver-major"]
+        update-types: [ "version-update:semver-major" ]
       - dependency-name: "node-red-contrib-homekit-bridged"
-        update-types: ["version-update:semver-major"]
+        update-types: [ "version-update:semver-major" ]

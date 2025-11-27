@@ -1,24 +1,36 @@
 name: Docker images - build
 
+permissions:
+  contents: read
+
+concurrency:
+  group: docker-build-${{ github.ref }}
+  cancel-in-progress: true
+
 on:
   workflow_dispatch:
   release:
-    types: [published]
+    types: [ published ]
   repository_dispatch:
-    types: [docker-build]
+    types: [ docker-build ]
 
 jobs:
   build:
+    timeout-minutes: 90
     env:
       LATEST_NODE: 22
       DEFAULT_IMAGE: nrchkb/node-red-homekit
       DEV_IMAGE: nrchkb/node-red-homekit-dev
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        shell: bash
+
     strategy:
       matrix:
-        node: [18, 20, 22]
-        suffix: ["", "-minimal", "-raspbian"]
+        node: [ 18, 20, 22 ]
+        suffix: [ "", "-minimal", "-raspbian" ]
 
     steps:
       - name: Login to DockerHub
@@ -113,11 +125,14 @@ jobs:
           PLATFORMS=""
           SUFFIX=""
           if [[ "${{matrix.suffix}}" == "-raspbian" ]]; then
-            PLATFORMS="linux/arm/v7, linux/arm/v6"
+            # Upstream Node-RED images no longer provide arm/v6 variants for recent tags
+            # Build only for supported Raspberry Pi platform(s)
+            PLATFORMS="linux/arm/v7"
             SUFFIX=""
             FFMPEG_OS="raspbian"
           else
-            PLATFORMS="linux/amd64, linux/arm64, linux/arm/v7, linux/arm/v6"
+            # Remove arm/v6 as it is not available in upstream manifests for recent tags
+            PLATFORMS="linux/amd64, linux/arm64, linux/arm/v7"
             SUFFIX="${{ matrix.suffix }}"
             FFMPEG_OS="alpine"
           fi
@@ -132,7 +147,7 @@ jobs:
           echo "ffmpegOS=$FFMPEG_OS" >> $GITHUB_OUTPUT
       - name: Build and push
         id: build-push
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         continue-on-error: true
         with:
           context: .

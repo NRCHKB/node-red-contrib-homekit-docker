@@ -14,20 +14,31 @@ Node-RED-homekit-docker is supported by a manifest list, which means one doesn't
 architecture. Using the image without any tag or the latest tag will pull the right image for the architecture
 required.
 
-Currently, Node-RED-homekit has support for multiple architectures:
+Currently, Node-RED-homekit images are published as a multi-arch manifest supporting the following architectures:
 
-- `amd64`   : based on linux Alpine - for most desktop computer (e.g., x64, x86-64, x86_64)
-- `arm32v6` : based on linux Alpine - (i.e. Raspberry Pi 1 & Zero)
-- `arm32v7` : based on linux Alpine - (i.e. Raspberry Pi 2, 3, 4)
-- `arm64v8` : based on linux Alpine - (i.e. Pine64)
+- `amd64`    – Alpine based (most PCs/servers: x64, x86-64, x86_64)
+- `arm32v7`  – Alpine based (Raspberry Pi 2/3/4)
+- `arm64v8`  – Alpine based (64-bit ARM boards like Raspberry Pi 3/4 64-bit OS, Pine64, etc.)
 
-**Note**: Currently there is a bug in Docker's architecture detection that fails for arm32v6 - e.g. Raspberry Pi Zero or
+Notes:
 
-1. For these devices you currently need to specify the full image tag for arm32v6.
+- The dedicated Raspbian variant (`*-raspbian` tags) is built for `arm32v7` only.
+- We no longer build or publish `arm32v6` images because upstream Node-RED images no longer provide this architecture
+  for current tags.
 
-**Note**: As of the Node-RED 4.0.0 release, we are no longer building docker image for previous versions. At the same
+**Note**: As of the Node-RED 4.0.0 release, we are no longer building docker images for previous versions. At the same
 time,
 images with NodeJS up to 18 (excluded) are dropped. The next major NRCHKB release will require NodeJS >= 22.
+
+#### Verify the published architecture
+
+You can verify the architectures available for a given tag using Docker Buildx:
+
+```bash
+docker buildx imagetools inspect nrchkb/node-red-homekit:latest
+# or a specific tag, e.g. Node/variant tagged image
+docker buildx imagetools inspect nrchkb/node-red-homekit:latest-22
+```
 
 ### Quick Start (for those already running Docker)
 
@@ -283,11 +294,11 @@ chown -R  1000:1000 <path_on_host>
 
 ### Debug
 
-To debug NRCHKB you have to add environment variable to command running node-red in docker by adding `-e` argument:
+To debug NRCHKB, you have to add environment variable to command running node-red in docker by adding `-e` argument:
 
 ```-e "DEBUG=NRCHKB*,HAP-NodeJS*"```
 
-To do that modify a starting script like below:
+To do that, modify a starting script like below:
 
 ```bash
 docker run -it -e "DEBUG=NRCHKB*,HAP-NodeJS*" --net=host -v <path_on_host>:/data -e DSM_HOSTNAME=<synology_hostname> -e TZ=Europe/Amsterdam -e DEBUG=NRCHKB:* --name=homekit nrchkb/node-red-homekit:<tag>
