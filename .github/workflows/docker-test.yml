@@ -7,14 +7,14 @@ on:
 jobs:
   testbuild:
     env:
-      LATEST_NODE: 14
+      LATEST_NODE: 24
       DEFAULT_IMAGE: nrchkb/node-red-homekit
       DEV_IMAGE: nrchkb/node-red-homekit-dev
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node: [14, 16, 18]
+        node: [14, 16, 18, 20, 22, 24]
         suffix: ["", "-minimal", "-raspbian"]
 
     steps:
