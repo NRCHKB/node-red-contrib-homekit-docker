@@ -1,22 +1,33 @@
-# Node-RED-homekit-docker
+git p# Node-RED-homekit-docker
 [![Docker Build](https://github.com/NRCHKB/node-red-contrib-homekit-docker/actions/workflows/docker-build.yml/badge.svg)](https://github.com/NRCHKB/node-red-contrib-homekit-docker/actions/workflows/docker-build.yml)
 [![DockerHub Pull](https://img.shields.io/docker/pulls/nrchkb/node-red-homekit.svg)](https://hub.docker.com/r/nrchkb/node-red-homekit)
 [![DockerHub Star](https://img.shields.io/docker/stars/nrchkb/node-red-homekit.svg?maxAge=2592000)](https://hub.docker.com/r/nrchkb/node-red-homekit)
- 
-Node-RED-homekit-docker is a Node-RED based project with support for homekit. It is based on the [official Node-RED Docker](https://hub.docker.com/r/nodered/node-red) images with the necessary tools and npm module [node-red-contrib-homekit-bridged](https://www.npmjs.com/package/node-red-contrib-homekit-bridged) installed to run homekit within a docker container. 
+
+Node-RED-homekit-docker is a Node-RED based project with support for homekit. It is based on
+the [official Node-RED Docker](https://hub.docker.com/r/nodered/node-red) images with the necessary tools and npm
+module [node-red-contrib-homekit-bridged](https://www.npmjs.com/package/node-red-contrib-homekit-bridged) installed to
+run homekit within a docker container.
 
 ## Architecture
-Node-RED-homekit-docker is supported by manifest list, which means one doesn't need to specify the tag for a specific architecture. Using the image without any tag or the latest tag, will pull the right image for the architecture required.
+
+Node-RED-homekit-docker is supported by a manifest list, which means one doesn't need to specify the tag for a specific
+architecture. Using the image without any tag or the latest tag will pull the right image for the architecture
+required.
 
 Currently, Node-RED-homekit has support for multiple architectures:
-- `amd64`   : based on linux Alpine - for most desktop computer (e.g. x64, x86-64, x86_64)
+
+- `amd64`   : based on linux Alpine - for most desktop computer (e.g., x64, x86-64, x86_64)
 - `arm32v6` : based on linux Alpine - (i.e. Raspberry Pi 1 & Zero)
 - `arm32v7` : based on linux Alpine - (i.e. Raspberry Pi 2, 3, 4)
 - `arm64v8` : based on linux Alpine - (i.e. Pine64)
 
-**Note**: Currently there is a bug in Docker's architecture detection that fails for arm32v6 - e.g. Raspberry Pi Zero or 1. For these devices you currently need to specify the full image tag for arm32v6.
+**Note**: Currently there is a bug in Docker's architecture detection that fails for arm32v6 - e.g. Raspberry Pi Zero or
 
-**Note**: As of Node-RED 3.0.0 release, we are no longer building docker image for version 1. At the same time, images with NodeJS 10 and 12 are dropped, Node-RED 2 will be shipped with NodeJS 14. Next major NRCHKB release will require NodeJS >= 16.
+1. For these devices you currently need to specify the full image tag for arm32v6.
+
+**Note**: As of the Node-RED 4.0.0 release, we are no longer building docker image for previous versions. At the same
+time,
+images with NodeJS up to 18 (excluded) are dropped. The next major NRCHKB release will require NodeJS >= 22.
 
 ### Quick Start (for those already running Docker)
 
@@ -35,11 +46,12 @@ Let's dissect that command:
     --name node-red-homekit     - Give this machine a friendly local name.
     nrchkb/node-red-homekit     - The image to base it.
 
-### Raspberry Pi (including install Docker)
+### Raspberry Pi (including installation Docker)
 
-Following these commands will install Docker, add user `pi` to Docker group, then set the docker container to always run.
+Following these commands will install Docker, add user `pi` to a Docker group, then set the docker container to always
+run.
 
-We assume you have some basic knowledge of Linux and you are logged in as `pi` user.  
+We assume you have some basic knowledge of Linux and you are logged in as `pi` user.
 
 1) Make sure we are in the home directory of the pi user:
 
@@ -59,7 +71,8 @@ sudo apt update && sudo apt upgrade -y
 curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh
 ```
 
-4) As the Docker script explains, add the pi user to the Docker group so that the pi user has the permissions to execute docker commands:
+4) As the Docker script explains, add the pi user to the Docker group so that the pi user has the permissions to execute
+   docker commands:
 
 ```bash
 sudo usermod -aG docker pi
@@ -71,7 +84,7 @@ sudo usermod -aG docker pi
 sudo reboot
 ```
 
-6) To test if your Docker install went well: 
+6) To test if your Docker installation went well:
 
 ```bash
 docker run --rm hello-world
@@ -108,23 +121,28 @@ For more examples and ideas, visit:
  https://docs.docker.com/get-started/
 ```
 
-If the above steps went as expected, you are ready to run the `nrchkb/node-red-homekit` image as a container. But before that we create a directory on the pi host so that all node-red / node-red-homekit files are stored outside the container on your raspberry pi.
+If the above steps went as expected, you are ready to run the `nrchkb/node-red-homekit` image as a container. But before
+that we create a directory on the pi host so that all node-red / node-red-homekit files are stored outside the container
+on your raspberry pi.
 
-7) Make directory in your pi user's home directory:
+7) Make a directory in your pi user's home directory:
 
 ```bash
 mkdir node-red-homekit
 ```
 
-8) Run the Docker run command to deploy the `nrchkb/node-red-homekit` image as a container and where the container `/data` directory is bound to the `/home/pi/node-red-homekit` directory on your Raspberry PI.
+8) Run the Docker run command to deploy the `nrchkb/node-red-homekit` image as a container and where the container
+   `/data` directory is bound to the `/home/pi/node-red-homekit` directory on your Raspberry PI.
 
 ```bash
 docker run -d --net=host -v ~/node-red-homekit:/data --restart always -e TZ=Europe/Amsterdam -e DEBUG=NRCHKB:* --name node-red-homekit nrchkb/node-red-homekit
 ```
 
-You don't need to explicit map ports, since all ports are opened on the hosts network! This is required for homekit to work well.
+You don't need to explicitly map ports, since all ports are opened on the host network! This is required for homekit to
+work well.
 
 ### Upgrade to the latest image
+
 Suppose there is a new `nrchkb/node-red-homekit` image available? How do I make use of this new image?
 
 1) Find the id of your current deployed container:
@@ -132,7 +150,9 @@ Suppose there is a new `nrchkb/node-red-homekit` image available? How do I make 
 ```bash
 docker container ls
 ```
-The above command lists all running container and in the first column it displays the id of the container and in the last column it's name.
+
+The above command lists all running containers, and in the first column it displays the id of the container and in the
+last column its name.
 
 2) Stop the current container:
 
@@ -141,6 +161,7 @@ docker stop <container_id or container_name>
 ```
 
 3) Remove the current container:
+
 ```
 docker rm  <container_id or container_name>
 ```
@@ -159,8 +180,9 @@ docker run -d --net=host -v ~/node-red-homekit:/data --restart always -e TZ=Euro
 
 This runs the container based on the latest `nrchkb/node-red-homekit` image and retains your flows!
 
-### Docker Compose (including install Docker Compose)
-For demo purpose we use a Raspberry Pi with Docker installed (see )
+### Docker Compose (including installation Docker Compose)
+
+For demo purpose we use a Raspberry Pi with Docker installed (see)
 
 1) Install required packages for Docker Compose
 
@@ -176,7 +198,7 @@ sudo pip3 -v install docker-compose
 
 3) Create a Docker compose yml for `nrchkb/node-red-homekit`:
 
-Let's assume you have a directory `/home/pi/node-red-homekit` with a `data` sub-directory:
+Let's assume you have a directory `/home/pi/node-red-homekit` with a `data` subdirectory:
 
 ```bash
 node-red-homekit/
@@ -185,7 +207,8 @@ node-red-homekit/
 1 directory, 0 files
 ```
 
-Use your favorite editor like nano to create a file named `docker-compose.yml` with the content below and save it in `/home/pi/node-red-homekit`.
+Use your favorite editor like nano to create a file named `docker-compose.yml` with the content below and save it in
+`/home/pi/node-red-homekit`.
 
 ```yaml
 version: '2'
@@ -202,11 +225,12 @@ services:
 ```
 
 note 1: `/home/pi/node-red-homekit/data` is the persistence directory where the Docker container stores its files.
-note 2: there is no port mapping defined, since the container is attached / uses the host network. 
+note 2: there is no port mapping defined, since the container is attached / uses the host network.
 
 4) Deploy the service as define in `docker-compose.yml`
 
-From the `/home/pi/node-red-homekit` directory executed the command below to deploy the service and therefore the container:
+From the `/home/pi/node-red-homekit` directory executed the command below to deploy the service and therefore the
+container:
 
 ```bash
 docker-compose up -d
@@ -226,13 +250,15 @@ The command below stops the current running container, removes it and removes th
 docker-compose down --rmi  all
 ```
 
-Run the command in step 4 to redeploy the service. It pulls the (latest) image, since now is available locally. 
+Run the command in step 4 to redeploy the service. It pulls the (latest) image, since now is available locally.
 
 ### Synology
 
 Synology users need to add the environment variable DSM_HOSTNAME.
 
-Click the Environment tab and add a new environment variable named DSM_HOSTNAME. The value of the DSM_HOSTNAME environment variable should exactly match the server name as shown under Synology DSM Control Panel -> Info Center -> Server name, it should contain no spaces or special characters.
+Click the Environment tab and add a new environment variable named DSM_HOSTNAME. The value of the DSM_HOSTNAME
+environment variable should exactly match the server name as shown under Synology DSM Control Panel → Info Center →
+Server name, it should contain no spaces or special characters.
 
 ```bash
 docker run -it --net=host -v <path_on_host>:/data -e DSM_HOSTNAME=<synology_hostname> -e TZ=Europe/Amsterdam -e DEBUG=NRCHKB:* --name=homekit nrchkb/node-red-homekit:<tag>
@@ -240,7 +266,8 @@ docker run -it --net=host -v <path_on_host>:/data -e DSM_HOSTNAME=<synology_host
 
 ### Permissions
 
-Since Node-RED 1.0 the container user is `node-red` and has uid `1000` and gid `1000`, make sure your <path_on_host> has the same uid and gid:
+Since Node-RED 1.0 the container user is `node-red` and has uid `1000` and gid `1000`, make sure your <path_on_host> has
+the same uid and gid:
 
 Verify command:
 
@@ -260,14 +287,16 @@ To debug NRCHKB you have to add environment variable to command running node-red
 
 ```-e "DEBUG=NRCHKB*,HAP-NodeJS*"```
 
-To do that modify starting script like below:
+To do that modify a starting script like below:
 
 ```bash
 docker run -it -e "DEBUG=NRCHKB*,HAP-NodeJS*" --net=host -v <path_on_host>:/data -e DSM_HOSTNAME=<synology_hostname> -e TZ=Europe/Amsterdam -e DEBUG=NRCHKB:* --name=homekit nrchkb/node-red-homekit:<tag>
 ```
 
 ### Node-RED Docker official
+
 For more detailed info refer to the [Node-RED Docker official](https://github.com/node-red/node-red-docker) pages.
 
 ### NRCHKB Support
+
 For more info visit our [Website](https://nrchkb.github.io) or [Discord](https://discord.gg/uvYac5u).

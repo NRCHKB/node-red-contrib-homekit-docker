@@ -10,14 +10,14 @@ on:
 jobs:
   build:
     env:
-      LATEST_NODE: 24
+      LATEST_NODE: 22
       DEFAULT_IMAGE: nrchkb/node-red-homekit
       DEV_IMAGE: nrchkb/node-red-homekit-dev
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node: [14, 16, 18, 20, 22, 24]
+        node: [18, 20, 22]
         suffix: ["", "-minimal", "-raspbian"]
 
     steps:
@@ -59,13 +59,7 @@ jobs:
       - name: Set Node-RED Version
         id: nodeRedVersion
         run: |
-          NODE_RED_VERSION=""
-          if [[ "${{matrix.node}}" == "14" ]]; then
-            NODE_RED_VERSION="2.2.3"
-            sed -ie "s/\"node-red\":[^\"].*\"/\"node-red\": \"${NODE_RED_VERSION}\"/g" package.json
-          else
-            NODE_RED_VERSION=$(grep -oE "\"node-red\": \"(\w*.\w*.\w*.\w*.\w*.)" package.json | cut -d\" -f4)
-          fi
+          NODE_RED_VERSION=$(grep -oE "\"node-red\": \"(\w*.\w*.\w*.\w*.\w*.)" package.json | cut -d\" -f4)
           echo "version=$NODE_RED_VERSION" >> $GITHUB_OUTPUT
       - name: Set Image Settings
         id: imageSettings
