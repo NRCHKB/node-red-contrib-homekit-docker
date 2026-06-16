@@ -26,9 +26,8 @@ Notes:
 - We no longer build or publish `arm32v6` images because upstream Node-RED images no longer provide this architecture
   for current tags.
 
-**Note**: As of the Node-RED 4.0.0 release, we are no longer building docker images for previous versions. At the same
-time,
-images with NodeJS up to 18 (excluded) are dropped. The next major NRCHKB release will require NodeJS >= 22.
+**Note**: As of the Node-RED 5.0.0 release, we are no longer building docker images for previous versions. At the same
+time, images with NodeJS up to 22 (excluded) are dropped.
 
 #### Verify the published architecture
 
