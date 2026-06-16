@@ -1,4 +1,5 @@
-git p# Node-RED-homekit-docker
+# Node-RED-homekit-docker
+
 [![Docker Build](https://github.com/NRCHKB/node-red-contrib-homekit-docker/actions/workflows/docker-build.yml/badge.svg)](https://github.com/NRCHKB/node-red-contrib-homekit-docker/actions/workflows/docker-build.yml)
 [![DockerHub Pull](https://img.shields.io/docker/pulls/nrchkb/node-red-homekit.svg)](https://hub.docker.com/r/nrchkb/node-red-homekit)
 [![DockerHub Star](https://img.shields.io/docker/stars/nrchkb/node-red-homekit.svg?maxAge=2592000)](https://hub.docker.com/r/nrchkb/node-red-homekit)
@@ -16,15 +17,17 @@ required.
 
 Currently, Node-RED-homekit images are published as a multi-arch manifest supporting the following architectures:
 
-- `amd64`    – Alpine based (most PCs/servers: x64, x86-64, x86_64)
-- `arm32v7`  – Alpine based (Raspberry Pi 2/3/4)
-- `arm64v8`  – Alpine based (64-bit ARM boards like Raspberry Pi 3/4 64-bit OS, Pine64, etc.)
+* `amd64`   – Alpine based (most PCs/servers: x64, x86-64, x86_64)
+* `arm64v8` – Alpine based for standard tags; Raspbian based for `*-raspbian` tags (64-bit ARM boards like Raspberry Pi
+  3/4/5 running a 64-bit OS, Pine64, etc.)
 
 Notes:
 
-- The dedicated Raspbian variant (`*-raspbian` tags) is built for `arm32v7` only.
-- We no longer build or publish `arm32v6` images because upstream Node-RED images no longer provide this architecture
-  for current tags.
+* We no longer build or publish `arm32v6` / `armv6` images.
+* We no longer build or publish `arm32v7` / `armv7` images. This also means 32-bit Raspberry Pi OS images are no
+  longer supported. Use a 64-bit OS on supported Raspberry Pi hardware, or stay on an older image tag that still
+  contains the required 32-bit architecture.
+* Dedicated Raspbian variants (`*-raspbian` tags) are built for `arm64v8` only.
 
 **Note**: As of the Node-RED 5.0.0 release, we are no longer building docker images for previous versions. At the same
 time, images with NodeJS up to 22 (excluded) are dropped.
@@ -60,6 +63,9 @@ Let's dissect that command:
 
 Following these commands will install Docker, add user `pi` to a Docker group, then set the docker container to always
 run.
+
+Current images require a supported 64-bit architecture. On Raspberry Pi, use a 64-bit OS because `armv6` and `armv7`
+images are no longer built or published.
 
 We assume you have some basic knowledge of Linux and you are logged in as `pi` user.
 

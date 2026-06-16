@@ -125,14 +125,11 @@ jobs:
           PLATFORMS=""
           SUFFIX=""
           if [[ "${{matrix.suffix}}" == "-raspbian" ]]; then
-            # Upstream Node-RED images no longer provide arm/v6 variants for recent tags
-            # Build only for supported Raspberry Pi platform(s)
-            PLATFORMS="linux/arm/v7"
+            PLATFORMS="linux/arm64"
             SUFFIX=""
             FFMPEG_OS="raspbian"
           else
-            # Remove arm/v6 as it is not available in upstream manifests for recent tags
-            PLATFORMS="linux/amd64, linux/arm64, linux/arm/v7"
+            PLATFORMS="linux/amd64, linux/arm64"
             SUFFIX="${{ matrix.suffix }}"
             FFMPEG_OS="alpine"
           fi

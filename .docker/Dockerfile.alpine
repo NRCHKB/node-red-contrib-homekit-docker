@@ -56,8 +56,6 @@ RUN case "$FFMPEG_OS" in \
 # s6 overlay
 RUN case "$TARGETPLATFORM" in \
     linux\/amd64) S6_ARCH='amd64';; \
-    linux\/arm/v7) S6_ARCH='armhf';; \
-    linux\/arm/v6) S6_ARCH='armhf';; \
     linux\/arm64) S6_ARCH='aarch64';; \
     *) echo "unsupported architecture"; exit 1 ;; \
     esac \
@@ -67,8 +65,6 @@ RUN case "$TARGETPLATFORM" in \
 # ffmpeg-for-homebridge
 RUN case "$TARGETPLATFORM" in \
     linux\/amd64) FFMPEG_ARCH='x86_64';; \
-    linux\/arm/v7) FFMPEG_ARCH='arm32v7';; \
-    linux\/arm/v6) FFMPEG_ARCH='arm32v7';; \
     linux\/arm64) FFMPEG_ARCH='aarch64';; \
     *) echo "unsupported architecture"; exit 1 ;; \
     esac \
